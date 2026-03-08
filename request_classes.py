@@ -5,7 +5,10 @@
 import socket
 import time
 import requests
+import ntplib
 from typing import Tuple, Any, Optional
+from time import ctime
+from socket import gaierror
 
 class RequestService():
     """the abstract class defining the behavior of concrete request classes"""
@@ -104,4 +107,17 @@ class HttpsService(RequestService):
             return False, None, f"Error during request: {exc}."
         
 
+class NtpService(RequestService):
+    """ """
+    def __init__(self):
+        pass
+
+    def runRequest(server: str) -> Tuple[bool, Optional[str]]:
+        client = ntplib.NTPClient()
+        try:
+            response = client.request(server, version=3)
+            return True, ctime(response.tx_time)
+        except (ntplib.NTPException, gaierror):
+            return False, None
+        
 
