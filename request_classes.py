@@ -76,13 +76,32 @@ class HttpService(RequestService):
     def __init__(self):
         pass
 
-    def runRequest(url: str) -> Tuple[bool, Optional[int], str]:
+    def runRequest(url: str) -> Tuple[bool, Optional[int]]:
         try:
             response: requests.Response = requests.get(url)
             up_status: bool = response.status_code < 400
             return up_status, response.status_code
         except requests.RequestException:
             return False, None
+        
+
+class HttpsService(RequestService):
+    """ """
+    def __init__(self):
+        pass
+
+    def runRequest(url: str, timeout: int) -> Tuple[bool, Optional[int], str]:
+        try:
+            headers: dict = {'User-Agent':'Mozilla/5.0'}
+            response: requests.Response = requests.get(url, headers=headers, timeout=timeout)
+            up_status: bool = response.status_code < 400
+            return up_status, response.status_code, "Server is up."
+        except requests.ConnectionError:
+            return False, None, "Connection Error."
+        except requests.Timeout:
+            return False, None, "Connection Timeout."
+        except requests.RequestException as exc:
+            return False, None, f"Error during request: {exc}."
         
 
 
