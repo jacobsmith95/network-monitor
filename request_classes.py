@@ -6,12 +6,12 @@ import socket
 import time
 from typing import Tuple, Any
 
-class RequestService(self):
+class RequestService():
     """the abstract class defining the behavior of concrete request classes"""
-    def __init__():
+    def __init__(self):
         pass
 
-    def runRequest():
+    def runRequest(self):
         pass
 
 
