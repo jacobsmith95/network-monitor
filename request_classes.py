@@ -45,7 +45,6 @@ class TracerouteService(RequestService):
     def __init__(self):
         self.ping: PingService = None
 
-
     def setPingRequest(self, PingService):
         self.ping = PingService
 
@@ -79,7 +78,7 @@ class HttpService(RequestService):
     def __init__(self):
         pass
 
-    def runRequest(url: str) -> Tuple[bool, Optional[int]]:
+    def runRequest(self, url: str) -> Tuple[bool, Optional[int]]:
         try:
             response: requests.Response = requests.get(url)
             up_status: bool = response.status_code < 400
@@ -93,7 +92,7 @@ class HttpsService(RequestService):
     def __init__(self):
         pass
 
-    def runRequest(url: str, timeout: int) -> Tuple[bool, Optional[int], str]:
+    def runRequest(self, url: str, timeout: int) -> Tuple[bool, Optional[int], str]:
         try:
             headers: dict = {'User-Agent':'Mozilla/5.0'}
             response: requests.Response = requests.get(url, headers=headers, timeout=timeout)
@@ -112,7 +111,7 @@ class NtpService(RequestService):
     def __init__(self):
         pass
 
-    def runRequest(server: str) -> Tuple[bool, Optional[str]]:
+    def runRequest(self, server: str) -> Tuple[bool, Optional[str]]:
         client = ntplib.NTPClient()
         try:
             response = client.request(server, version=3)
