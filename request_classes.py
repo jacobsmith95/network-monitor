@@ -15,7 +15,7 @@ class RequestService():
         pass
 
 
-class PingRequest(RequestService):
+class PingService(RequestService):
     """creates an ICMP packet and pings the given server"""
     def __init__(self):
         pass
@@ -36,14 +36,14 @@ class PingRequest(RequestService):
                 return None, None
             
 
-class TracerouteRequest(RequestService):
+class TracerouteService(RequestService):
     """ """
     def __init__(self):
-        self.ping: PingRequest = None
+        self.ping: PingService = None
 
 
-    def setPingRequest(self, PingRequest):
-        self.ping = PingRequest
+    def setPingRequest(self, PingService):
+        self.ping = PingService
 
     def runRequest(self, host: str, max_hops: int, pings_per_hop: int, verbose: bool) -> str:
         result = [f"{'Hop'} {'Address'} {'Min (ms)'} {'Avg (ms)'} {'Max (ms)'} {'Count'}"]
