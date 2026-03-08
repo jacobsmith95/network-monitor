@@ -4,7 +4,8 @@
 
 import socket
 import time
-from typing import Tuple, Any
+import requests
+from typing import Tuple, Any, Optional
 
 class RequestService():
     """the abstract class defining the behavior of concrete request classes"""
@@ -68,3 +69,20 @@ class TracerouteService(RequestService):
             if addr and addr[0] == host:
                 break
         return "\n".join(result)
+
+
+class HttpService(RequestService):
+    """ """
+    def __init__(self):
+        pass
+
+    def runRequest(url: str) -> Tuple[bool, Optional[int], str]:
+        try:
+            response: requests.Response = requests.get(url)
+            up_status: bool = response.status_code < 400
+            return up_status, response.status_code
+        except requests.RequestException:
+            return False, None
+        
+
+
