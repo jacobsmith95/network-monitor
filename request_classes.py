@@ -6,6 +6,8 @@ import socket
 import time
 import requests
 import ntplib
+import dns.resolver
+import dns.exception
 from typing import Tuple, Any, Optional
 from time import ctime
 from socket import gaierror
@@ -119,4 +121,21 @@ class NtpService(RequestService):
         except (ntplib.NTPException, gaierror):
             return False, None
         
+
+class DnsService(RequestService):
+    """ """
+    def __init__(self):
+        pass
+
+    def runRequest(self, server, query, record_type) -> Tuple[bool, Optional[str]]:
+        try:
+            resolver = dns.resolver.Resolver()
+            resolver.nameservers = [socket.gethostbyname(server)]
+            query_result = resolver.resolve(query, record_type)
+            result = [str(rdata) for rdata in query_result]
+            return True, result
+        except (dns.exception.Timeout, dns.resolver.NoNameservers, dns.resolver.NoAnswer, gaierror) as exc:
+            return False, f"Error during request: {exc}."
+        
+
 
