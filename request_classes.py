@@ -14,15 +14,17 @@ import zlib
 import struct
 import random
 import string
+from abc import ABC, abstractmethod
 from typing import Tuple, Any, Optional
 from time import ctime
 from socket import gaierror
 
-class RequestService():
+class RequestService(ABC):
     """the abstract class defining the behavior of concrete request classes"""
     def __init__(self):
         pass
 
+    @abstractmethod
     def runRequest(self):
         pass
 
