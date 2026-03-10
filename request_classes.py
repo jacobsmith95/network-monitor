@@ -30,13 +30,17 @@ class RequestService():
 class PingService(RequestService):
     """creates an ICMP packet and pings the given server"""
     def __init__(self):
+        self.packet = ICMPPacket
         pass
+
+    def setICMPPacket(self, ICMPPacket):
+        self.packet = ICMPPacket
 
     def runRequest(self, host: str, ttl: int, timeout: int, sequence_number: int) -> Tuple[Any, float] | Tuple[Any, None]:
         with socket.socket(socket.AF_INET, socket.SOCK_RAW, socket.IPPROTO_ICMP) as sock:
             sock.setsockopt(socket.IPPROTO_IP, socket.IP_TTL, ttl)
             sock.settimeout(timeout)
-            packet: bytes = ""
+            packet: bytes = self.packet.createPacket(icmp_type=8, icmp_code=0, sequence_num=sequence_number)
             sock.sendto(packet, (host, 1))
             start: float = time.time()
             try:
