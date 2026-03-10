@@ -127,7 +127,7 @@ class DnsService(RequestService):
     def __init__(self):
         pass
 
-    def runRequest(self, server, query, record_type) -> Tuple[bool, Optional[str]]:
+    def runRequest(self, server: str, query: str, record_type: str) -> Tuple[bool, Optional[str]]:
         try:
             resolver = dns.resolver.Resolver()
             resolver.nameservers = [socket.gethostbyname(server)]
@@ -136,6 +136,25 @@ class DnsService(RequestService):
             return True, result
         except (dns.exception.Timeout, dns.resolver.NoNameservers, dns.resolver.NoAnswer, gaierror) as exc:
             return False, f"Error during request: {exc}."
+        
+
+class TcpPortService(RequestService):
+    """ """
+    def __init__(self):
+        pass
+
+    def runRequest(self, ip_address: str, port: int) -> Tuple[bool, Optional[str]]:
+        try:
+            with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
+                sock.settimeout(3)
+                sock.connect((ip_address, port))
+                return True, f"Port {port} on {ip_address} is open."
+        except socket.timeout:
+            return False, f"Port {port} on {ip_address} timed out."
+        except socket.error:
+            return False, f"Port {port} on {ip_address} is closed or unreachable."
+        except Exception as exc:
+            return False, f"Failed to check port {port} on {ip_address} due to an error: {exc}."
         
 
 
