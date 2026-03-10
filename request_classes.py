@@ -8,6 +8,12 @@ import requests
 import ntplib
 import dns.resolver
 import dns.exception
+import threading
+import os
+import zlib
+import struct
+import random
+import string
 from typing import Tuple, Any, Optional
 from time import ctime
 from socket import gaierror
@@ -174,3 +180,29 @@ class UdpPortService(RequestService):
                     return True, f"UDP port {port} on {ip_address} is open or no response was received."
         except Exception as exc:
             return False, f"Failed to check UDP port {port} on {ip_address} due to an error: {exc}."
+
+
+class ICMPPacket:
+    """ """
+    def __init__(self):
+        pass
+
+    def createPacket(self, icmp_type: int, icmp_code: int, sequence_num: int, data_size: int) -> bytes:
+        thread_id = threading.get_ident()
+        proc_id = os.getpid()
+        icmp_id = zlib.crc32(f"{thread_id}{proc_id}".encode()) & 0xffff
+        header: bytes = struct.pack("bbHHh", icmp_type, icmp_code, 0, icmp_id, sequence_num)
+        rand_char: str = random.choice(string.ascii_letters + string.digits)
+        data: bytes = (rand_char * data_size).encode()
+        check_sum = self.calculateCheckSum(header + data)
+        header = struct.pack("bbHHh", icmp_type, icmp_code, socket.htons(check_sum), icmp_id, sequence_num)
+        return header + data
+    
+    def calculateCheckSum(data: bytes) -> int:
+        check_sum: int = 0
+        for i in range(0, len(data), 2):
+            curr_num: int = (data[i] << 8) + (data[i+1])
+            check_sum += curr_num
+        check_sum = (check_sum >> 16) + (check_sum & 0xffff)
+        check_sum = ~check_sum & 0xffff
+        return check_sum
