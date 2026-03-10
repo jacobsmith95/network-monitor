@@ -148,13 +148,29 @@ class TcpPortService(RequestService):
             with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
                 sock.settimeout(3)
                 sock.connect((ip_address, port))
-                return True, f"Port {port} on {ip_address} is open."
+                return True, f"TCP port {port} on {ip_address} is open."
         except socket.timeout:
-            return False, f"Port {port} on {ip_address} timed out."
+            return False, f"TCP port {port} on {ip_address} timed out."
         except socket.error:
-            return False, f"Port {port} on {ip_address} is closed or unreachable."
+            return False, f"TCP port {port} on {ip_address} is closed or unreachable."
         except Exception as exc:
-            return False, f"Failed to check port {port} on {ip_address} due to an error: {exc}."
+            return False, f"Failed to check TCP port {port} on {ip_address} due to an error: {exc}."
         
 
+class UdpPortService(RequestService):
+    """ """
+    def __init__(self):
+        pass
 
+    def runRequest(self, ip_address: str, port: int) -> Tuple[bool, Optional[str]]:
+        try:
+            with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
+                sock.settimeout(3)
+                sock.sendto(b"", (ip_address, port))
+                try:
+                    sock.recvfrom(1024)
+                    return False, f"UDP port {port} on {ip_address} is closed."
+                except socket.timeout:
+                    return True, f"UDP port {port} on {ip_address} is open or no response was received."
+        except Exception as exc:
+            return False, f"Failed to check UDP port {port} on {ip_address} due to an error: {exc}."
