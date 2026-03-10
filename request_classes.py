@@ -30,7 +30,7 @@ class RequestService():
 class PingService(RequestService):
     """creates an ICMP packet and pings the given server"""
     def __init__(self):
-        self.packet = ICMPPacket
+        self.packet: ICMPPacket = None
         pass
 
     def setICMPPacket(self, ICMPPacket):
@@ -61,7 +61,7 @@ class TracerouteService(RequestService):
         self.ping = PingService
 
     def runRequest(self, host: str, max_hops: int, pings_per_hop: int, verbose: bool) -> str:
-        result = [f"{'Hop'} {'Address'} {'Min (ms)'} {'Avg (ms)'} {'Max (ms)'} {'Count'}"]
+        result = [f"{'Hop':>3} {'Address':<15} {'Min (ms)':>8} {'Avg (ms)':>8} {'Max (ms)':>8} {'Count':>5}"]
         for ttl in range(1, max_hops+1):
             if verbose:
                 print(f"Pinging {host} with ttl: {ttl}")
@@ -75,9 +75,9 @@ class TracerouteService(RequestService):
                 avg_ping = sum(ping_times)/len(ping_times)
                 max_ping = max(ping_times)
                 count = len(ping_times)
-                result.append(f"")
+                result.append(f"{ttl:>3} {addr[0] if addr else '*':<15} {min_ping:>8.2f}ms {avg_ping:>8.2f}ms {max_ping:>8.2f}ms {count:>5}")
             else:
-                result.append(f"")
+                result.append(f"{ttl:>3} {'*':<15} {'*':>8} {'*':>8} {'*':>8} {0:>5}")
             if verbose and result:
                 print(f"\tResult: {result[-1]}")
             if addr and addr[0] == host:
