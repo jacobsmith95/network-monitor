@@ -33,7 +33,6 @@ class PingService(RequestService):
     """creates an ICMP packet and pings the given server"""
     def __init__(self):
         self.packet: ICMPPacket = None
-        pass
 
     def setICMPPacket(self, ICMPPacket):
         self.packet = ICMPPacket
