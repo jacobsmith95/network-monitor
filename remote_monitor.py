@@ -3,6 +3,7 @@
 #
 
 import json
+import sys
 from abc import ABC, abstractmethod
 
 def main():
@@ -45,6 +46,10 @@ class RemoteClient(AbstractClient):
             json.dump(config, file)
         file.close()
         return
+    
+    def ExitProgram():
+        print("Exiting remote monitor...")
+        sys.exit()
 
 
 if __name__ == "__main__":
