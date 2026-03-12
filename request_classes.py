@@ -34,14 +34,14 @@ class PingService(RequestService):
     def __init__(self):
         self.packet: ICMPPacket = None
 
-    def setICMPPacket(self, ICMPPacket):
+    def SetICMPPacket(self, ICMPPacket):
         self.packet = ICMPPacket
 
-    def runRequest(self, host: str, ttl: int, timeout: int, sequence_number: int) -> Tuple[Any, float] | Tuple[Any, None]:
+    def RunRequest(self, host: str, ttl: int, timeout: int, sequence_number: int) -> Tuple[Any, float] | Tuple[Any, None]:
         with socket.socket(socket.AF_INET, socket.SOCK_RAW, socket.IPPROTO_ICMP) as sock:
             sock.setsockopt(socket.IPPROTO_IP, socket.IP_TTL, ttl)
             sock.settimeout(timeout)
-            packet: bytes = self.packet.createPacket(icmp_type=8, icmp_code=0, sequence_num=sequence_number)
+            packet: bytes = self.packet.CreatePacket(icmp_type=8, icmp_code=0, sequence_num=sequence_number)
             sock.sendto(packet, (host, 1))
             start: float = time.time()
             try:
@@ -58,17 +58,17 @@ class TracerouteService(RequestService):
     def __init__(self):
         self.ping: PingService = None
 
-    def setPingRequest(self, PingService):
+    def SetPingRequest(self, PingService):
         self.ping = PingService
 
-    def runRequest(self, host: str, max_hops: int, pings_per_hop: int, verbose: bool) -> str:
+    def RunRequest(self, host: str, max_hops: int, pings_per_hop: int, verbose: bool) -> str:
         result = [f"{'Hop':>3} {'Address':<15} {'Min (ms)':>8} {'Avg (ms)':>8} {'Max (ms)':>8} {'Count':>5}"]
         for ttl in range(1, max_hops+1):
             if verbose:
                 print(f"Pinging {host} with ttl: {ttl}")
             ping_times = []
             for number in range(pings_per_hop):
-                addr, response = self.ping.runRequest()
+                addr, response = self.ping.RunRequest()
                 if response is not None:
                     ping_times.append(response)
             if ping_times:
@@ -91,7 +91,7 @@ class HttpService(RequestService):
     def __init__(self):
         pass
 
-    def runRequest(self, url: str) -> Tuple[bool, Optional[int]]:
+    def RunRequest(self, url: str) -> Tuple[bool, Optional[int]]:
         try:
             response: requests.Response = requests.get(url)
             up_status: bool = response.status_code < 400
@@ -105,7 +105,7 @@ class HttpsService(RequestService):
     def __init__(self):
         pass
 
-    def runRequest(self, url: str, timeout: int) -> Tuple[bool, Optional[int], str]:
+    def RunRequest(self, url: str, timeout: int) -> Tuple[bool, Optional[int], str]:
         try:
             headers: dict = {'User-Agent':'Mozilla/5.0'}
             response: requests.Response = requests.get(url, headers=headers, timeout=timeout)
@@ -124,7 +124,7 @@ class NtpService(RequestService):
     def __init__(self):
         pass
 
-    def runRequest(self, server: str) -> Tuple[bool, Optional[str]]:
+    def RunRequest(self, server: str) -> Tuple[bool, Optional[str]]:
         client = ntplib.NTPClient()
         try:
             response = client.request(server, version=3)
@@ -138,7 +138,7 @@ class DnsService(RequestService):
     def __init__(self):
         pass
 
-    def runRequest(self, server: str, query: str, record_type: str) -> Tuple[bool, Optional[str]]:
+    def RunRequest(self, server: str, query: str, record_type: str) -> Tuple[bool, Optional[str]]:
         try:
             resolver = dns.resolver.Resolver()
             resolver.nameservers = [socket.gethostbyname(server)]
@@ -154,7 +154,7 @@ class TcpPortService(RequestService):
     def __init__(self):
         pass
 
-    def runRequest(self, ip_address: str, port: int) -> Tuple[bool, Optional[str]]:
+    def RunRequest(self, ip_address: str, port: int) -> Tuple[bool, Optional[str]]:
         try:
             with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
                 sock.settimeout(3)
@@ -173,7 +173,7 @@ class UdpPortService(RequestService):
     def __init__(self):
         pass
 
-    def runRequest(self, ip_address: str, port: int) -> Tuple[bool, Optional[str]]:
+    def RunRequest(self, ip_address: str, port: int) -> Tuple[bool, Optional[str]]:
         try:
             with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
                 sock.settimeout(3)
@@ -192,18 +192,18 @@ class ICMPPacket:
     def __init__(self):
         pass
 
-    def createPacket(self, icmp_type: int, icmp_code: int, sequence_num: int, data_size: int) -> bytes:
+    def CreatePacket(self, icmp_type: int, icmp_code: int, sequence_num: int, data_size: int) -> bytes:
         thread_id = threading.get_ident()
         proc_id = os.getpid()
         icmp_id = zlib.crc32(f"{thread_id}{proc_id}".encode()) & 0xffff
         header: bytes = struct.pack("bbHHh", icmp_type, icmp_code, 0, icmp_id, sequence_num)
         rand_char: str = random.choice(string.ascii_letters + string.digits)
         data: bytes = (rand_char * data_size).encode()
-        check_sum = self.calculateCheckSum(header + data)
+        check_sum = self.CalculateCheckSum(header + data)
         header = struct.pack("bbHHh", icmp_type, icmp_code, socket.htons(check_sum), icmp_id, sequence_num)
         return header + data
     
-    def calculateCheckSum(self, data: bytes) -> int:
+    def CalculateCheckSum(self, data: bytes) -> int:
         check_sum: int = 0
         for i in range(0, len(data), 2):
             curr_num: int = (data[i] << 8) + (data[i+1])
