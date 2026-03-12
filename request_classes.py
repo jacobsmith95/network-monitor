@@ -203,7 +203,7 @@ class ICMPPacket:
         header = struct.pack("bbHHh", icmp_type, icmp_code, socket.htons(check_sum), icmp_id, sequence_num)
         return header + data
     
-    def calculateCheckSum(data: bytes) -> int:
+    def calculateCheckSum(self, data: bytes) -> int:
         check_sum: int = 0
         for i in range(0, len(data), 2):
             curr_num: int = (data[i] << 8) + (data[i+1])
