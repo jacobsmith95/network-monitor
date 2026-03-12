@@ -21,7 +21,7 @@ class AbstractClient(ABC):
         pass
 
     @abstractmethod
-    def OpenSocket():
+    def SetSocketHandler():
         pass
 
     @abstractmethod
@@ -35,6 +35,11 @@ class AbstractClient(ABC):
     @abstractmethod
     def ExitProgram():
         pass
+
+
+class AbstractSocketHandler(ABC):
+    """ """
+    pass
 
 
 class AbstractCommsHandler(ABC):
@@ -66,12 +71,16 @@ class RemoteClient(AbstractClient):
         sys.exit()
 
 
-class CommsHandler():
+class SocketHandler(AbstractSocketHandler):
+    """ """
+    pass
+
+class CommsHandler(AbstractCommsHandler):
     """ """
     pass
 
 
-class ServiceHandler():
+class ServiceHandler(AbstractServiceHandler):
     """ """
     pass
 
