@@ -21,16 +21,30 @@ class AbstractClient(ABC):
         pass
 
     @abstractmethod
-    def CommsHandler():
+    def OpenSocket():
         pass
 
     @abstractmethod
-    def ServicesHandler():
+    def SetServiceHandler():
+        pass
+
+    @abstractmethod
+    def SetCommsHandler():
         pass
 
     @abstractmethod
     def ExitProgram():
         pass
+
+
+class AbstractCommsHandler(ABC):
+    """ """
+    pass
+
+
+class AbstractServiceHandler(ABC):
+    """ """
+    pass
 
 
 class RemoteClient(AbstractClient):
@@ -50,6 +64,16 @@ class RemoteClient(AbstractClient):
     def ExitProgram():
         print("Exiting remote monitor...")
         sys.exit()
+
+
+class CommsHandler():
+    """ """
+    pass
+
+
+class ServiceHandler():
+    """ """
+    pass
 
 
 if __name__ == "__main__":
