@@ -4,7 +4,10 @@
 
 import json
 import sys
+import socket
 from abc import ABC, abstractmethod
+from rich.console import Console
+
 
 def main():
     client = RemoteClient()
@@ -44,7 +47,9 @@ class AbstractClient(ABC):
 
 class AbstractSocketHandler(ABC):
     """ """
-    pass
+    @abstractmethod
+    def CreateSocket():
+        pass
 
 
 class AbstractCommsHandler(ABC):
@@ -60,6 +65,7 @@ class AbstractServiceHandler(ABC):
 class RemoteClient(AbstractClient):
     """ """
     def RunMonitor() -> None:
+        console = Console()
         pass
 
     def ReadSettings(monitor_id: str) -> str:
@@ -81,6 +87,8 @@ class RemoteClient(AbstractClient):
 
 class SocketHandler(AbstractSocketHandler):
     """ """
+    def CreateSocket(self, ip_addr: str, port: str) -> socket:
+        sock = socket.socket()
     pass
 
 class CommsHandler(AbstractCommsHandler):
