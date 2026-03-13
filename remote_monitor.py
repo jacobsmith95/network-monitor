@@ -7,11 +7,16 @@ import sys
 from abc import ABC, abstractmethod
 
 def main():
-    pass
+    client = RemoteClient()
+    client.RunMonitor()
 
 
 class AbstractClient(ABC):
     """ """
+    @abstractmethod
+    def RunMonitor():
+        pass
+
     @abstractmethod
     def ReadSettings():
         pass
@@ -54,6 +59,9 @@ class AbstractServiceHandler(ABC):
 
 class RemoteClient(AbstractClient):
     """ """
+    def RunMonitor() -> None:
+        pass
+
     def ReadSettings(monitor_id: str) -> str:
         with open(f"monitor_config_{monitor_id}.txt", "r") as file:
             config = json.load(file)
