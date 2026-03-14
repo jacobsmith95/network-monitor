@@ -123,12 +123,28 @@ class CommsHandler(AbstractHandler):
                 if monitor_message:
                     console.print()
                 match monitor_message.decode():
-                    case "":
-                    case "":
-                    case "":
-                    case "":
-                    case "":
-        pass
+                    case "check_status":
+                        pass
+                    case "start_services":
+                        pass
+                    case "end_services":
+                        pass
+                    case "close_monitor":
+                        pass
+                    case _:
+                        pass
+            except socket.timeout:
+                monitor_queue.put()
+                return
+            except ConnectionAbortedError:
+                monitor_queue.put()
+                return
+            except ConnectionResetError:
+                monitor_queue.put()
+                return
+            finally:
+                continue
+        return
 
 
 class ServiceHandler(AbstractHandler):
