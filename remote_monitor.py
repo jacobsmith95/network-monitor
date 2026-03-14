@@ -76,10 +76,13 @@ class RemoteClient(AbstractClient):
         console = Console()
         if not self.sockethandler:
             console.print("No sockethandler currently set, set a sockethandler to open a socket.")
+            return
         monitor_sock, monitor_id = self.sockethandler.CreateSocket(ip_addr= ip_addr, port= port)
         console.print(f"Monitor service listening at {ip_addr} on port {port}.")
         out_queue = Queue()
         message_queue = Queue()
+        end_event = threading.Event()
+        monitor_event = threading.Event()
         try:
             while True:
                 console.print("Waiting for server connection...")
@@ -88,7 +91,7 @@ class RemoteClient(AbstractClient):
 
 
         finally:
-            
+            monitor_sock.close()
 
     def ReadSettings(monitor_id: str) -> str:
         with open(f"monitor_config_{monitor_id}.txt", "r") as file:
