@@ -7,6 +7,7 @@ import sys
 import socket
 from abc import ABC, abstractmethod
 from rich.console import Console
+from typing import Tuple
 
 
 def main():
@@ -87,9 +88,13 @@ class RemoteClient(AbstractClient):
 
 class SocketHandler(AbstractSocketHandler):
     """ """
-    def CreateSocket(self, ip_addr: str, port: str) -> socket:
-        sock = socket.socket()
-    pass
+    def CreateSocket(self, ip_addr: str, port: str) -> Tuple[object, str]:
+        monitor_id = ip_addr + '-' + port
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.bind((ip_addr, int(port)))
+        sock.listen(5)
+        sock.setsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE, 1)
+        return [sock, monitor_id]
 
 class CommsHandler(AbstractCommsHandler):
     """ """
