@@ -68,11 +68,21 @@ class AbstractServiceHandler(ABC):
 class RemoteClient(AbstractClient):
     """ """
     def __init__(self):
-        self.sockethandler = None
+        self.sockethandler: SocketHandler = None
 
-    def RunMonitor() -> None:
+    def RunMonitor(self, ip_addr: str, port: str) -> None:
         console = Console()
-        pass
+        if not self.sockethandler:
+            console.print("No sockethandler currently set, set a sockethandler to open a socket.")
+        monitor_sock, monitor_id = self.sockethandler.CreateSocket(ip_addr= ip_addr, port= port)
+        console.print(f"Monitor service listening at {ip_addr} on port {port}.")
+        try:
+            while True:
+                console.print("Waiting for server connection...")
+
+
+        finally:
+            monitor_sock.close()
 
     def ReadSettings(monitor_id: str) -> str:
         with open(f"monitor_config_{monitor_id}.txt", "r") as file:
