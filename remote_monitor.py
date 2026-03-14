@@ -5,9 +5,11 @@
 import json
 import sys
 import socket
+import threading
 from abc import ABC, abstractmethod
 from rich.console import Console
 from typing import Tuple
+from queue import Queue
 
 
 def main():
@@ -79,10 +81,12 @@ class RemoteClient(AbstractClient):
         try:
             while True:
                 console.print("Waiting for server connection...")
+                server_socket, server_addr = monitor_sock.accept()
+
 
 
         finally:
-            monitor_sock.close()
+            
 
     def ReadSettings(monitor_id: str) -> str:
         with open(f"monitor_config_{monitor_id}.txt", "r") as file:
