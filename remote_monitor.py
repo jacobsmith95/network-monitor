@@ -78,6 +78,8 @@ class RemoteClient(AbstractClient):
             console.print("No sockethandler currently set, set a sockethandler to open a socket.")
         monitor_sock, monitor_id = self.sockethandler.CreateSocket(ip_addr= ip_addr, port= port)
         console.print(f"Monitor service listening at {ip_addr} on port {port}.")
+        out_queue = Queue()
+        message_queue = Queue()
         try:
             while True:
                 console.print("Waiting for server connection...")
