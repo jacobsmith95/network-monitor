@@ -12,6 +12,8 @@ from typing import Tuple
 
 def main():
     client = RemoteClient()
+    sockethandler = SocketHandler()
+    client.SetSocketHandler(sockethandler)
     client.RunMonitor()
 
 
