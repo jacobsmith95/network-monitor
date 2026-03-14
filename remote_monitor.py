@@ -50,21 +50,11 @@ class AbstractClient(ABC):
         pass
 
 
-class AbstractSocketHandler(ABC):
+class AbstractHandler(ABC):
     """ """
     @abstractmethod
-    def CreateSocket():
+    def RunHandler():
         pass
-
-
-class AbstractCommsHandler(ABC):
-    """ """
-    pass
-
-
-class AbstractServiceHandler(ABC):
-    """ """
-    pass
 
 
 class RemoteClient(AbstractClient):
@@ -77,7 +67,7 @@ class RemoteClient(AbstractClient):
         if not self.sockethandler:
             console.print("No sockethandler currently set, set a sockethandler to open a socket.")
             return
-        monitor_sock, monitor_id = self.sockethandler.CreateSocket(ip_addr= ip_addr, port= port)
+        monitor_sock, monitor_id = self.sockethandler.RunHandler(ip_addr= ip_addr, port= port)
         console.print(f"Monitor service listening at {ip_addr} on port {port}.")
         out_queue = Queue()
         message_queue = Queue()
@@ -113,9 +103,9 @@ class RemoteClient(AbstractClient):
         sys.exit()
 
 
-class SocketHandler(AbstractSocketHandler):
+class SocketHandler(AbstractHandler):
     """ """
-    def CreateSocket(self, ip_addr: str, port: str) -> Tuple[object, str]:
+    def RunHandler(self, ip_addr: str, port: str) -> Tuple[object, str]:
         monitor_id = ip_addr + '-' + port
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         sock.bind((ip_addr, int(port)))
@@ -123,12 +113,14 @@ class SocketHandler(AbstractSocketHandler):
         sock.setsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE, 1)
         return [sock, monitor_id]
 
-class CommsHandler(AbstractCommsHandler):
+class CommsHandler(AbstractHandler):
     """ """
-    pass
+    def RunHandler(self, ) -> None:
+        while not
+        pass
 
 
-class ServiceHandler(AbstractServiceHandler):
+class ServiceHandler(AbstractHandler):
     """ """
     pass
 
