@@ -65,6 +65,9 @@ class AbstractServiceHandler(ABC):
 
 class RemoteClient(AbstractClient):
     """ """
+    def __init__(self):
+        self.sockethandler = None
+
     def RunMonitor() -> None:
         console = Console()
         pass
@@ -80,6 +83,9 @@ class RemoteClient(AbstractClient):
             json.dump(config, file)
         file.close()
         return
+    
+    def SetSocketHandler(self, sockethandler):
+        self.sockethandler = sockethandler
     
     def ExitProgram():
         print("Exiting remote monitor...")
