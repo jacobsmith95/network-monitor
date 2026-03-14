@@ -116,7 +116,18 @@ class SocketHandler(AbstractHandler):
 class CommsHandler(AbstractHandler):
     """ """
     def RunHandler(self, ) -> None:
-        while not
+        while not monitor_event.is_set():
+            try:
+                console.print()
+                monitor_message = monitor_sock.recv(1024)
+                if monitor_message:
+                    console.print()
+                match monitor_message.decode():
+                    case "":
+                    case "":
+                    case "":
+                    case "":
+                    case "":
         pass
 
 
