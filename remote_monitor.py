@@ -124,7 +124,9 @@ class CommsHandler(AbstractHandler):
                     console.print()
                 match monitor_message.decode():
                     case "check_status":
-                        pass
+                        response = "status: on"
+                        monitor_sock.sendall(response.encode())
+                        continue
                     case "start_services":
                         pass
                     case "end_services":
