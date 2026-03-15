@@ -119,15 +119,15 @@ class RemoteClient(AbstractClient):
         file.close()
         return
     
-    def SetSocketHandler(self, sockethandler: SocketHandler) -> None:
+    def SetSocketHandler(self, sockethandler: AbstractHandler) -> None:
         self.sockethandler = sockethandler
         return
 
-    def SetCommsHandler(self, commshandler: CommsHandler) -> None:
+    def SetCommsHandler(self, commshandler: AbstractHandler) -> None:
         self.commshandler = commshandler
         return
     
-    def SetServiceHandler(self, servicehandler: ServiceHandler) -> None:
+    def SetServiceHandler(self, servicehandler: AbstractHandler) -> None:
         self.servicehandler = servicehandler
         return
     
@@ -149,12 +149,13 @@ class SocketHandler(AbstractHandler):
 class CommsHandler(AbstractHandler):
     """ """
     def RunHandler(self, monitor_sock: socket,  queue_dict: dict, monitor_event: threading.Event) -> None:
+        incommsqueue = queue_dict["in comms"]
+        outcommsqueue = queue_dict["out comms"]
         while not monitor_event.is_set():
             try:
-                console.print()
                 monitor_message = monitor_sock.recv(1024)
                 if monitor_message:
-                    console.print()
+                    continue
                 match monitor_message.decode():
                     case "check_status":
                         response = "status: on"
