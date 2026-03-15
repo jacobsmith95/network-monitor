@@ -61,6 +61,14 @@ class RemoteClient(AbstractClient):
     """ """
     def __init__(self):
         self.sockethandler: SocketHandler = None
+        self.commshandler: CommsHandler = None
+        self.servicehandler: ServiceHandler = None
+        self.in_socket_q: Queue = Queue()
+        self.out_socket_q: Queue = Queue()
+        self.in_comms_q: Queue = Queue()
+        self.out_comms_q: Queue = Queue()
+        self.in_service_q: Queue = Queue()
+        self.out_service_q: Queue = Queue()
 
     def RunMonitor(self, ip_addr: str, port: str) -> None:
         console = Console()
