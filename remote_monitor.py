@@ -75,10 +75,14 @@ class RemoteClient(AbstractClient):
         if not self.sockethandler:
             console.print("No sockethandler currently set, set a sockethandler to open a socket.")
             return
+        if not self.commshandler:
+            console.print("No commshandler currently set, set a commshandler to continue.")
+            return
+        if not self.servicehandler:
+            console.print("No servicehandler currently set, set a servicehandler to continue.")
+            return
         monitor_sock, monitor_id = self.sockethandler.RunHandler(ip_addr= ip_addr, port= port)
         console.print(f"Monitor service listening at {ip_addr} on port {port}.")
-        out_queue = Queue()
-        message_queue = Queue()
         end_event = threading.Event()
         monitor_event = threading.Event()
         try:
