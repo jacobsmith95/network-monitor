@@ -63,7 +63,7 @@ class RemoteClient(AbstractClient):
         self.sockethandler: SocketHandler = None
         self.commshandler: CommsHandler = None
         self.servicehandler: ServiceHandler = None
-        
+
         self.in_socket_q: Queue = Queue()
         self.out_socket_q: Queue = Queue()
         self.in_comms_q: Queue = Queue()
@@ -83,11 +83,11 @@ class RemoteClient(AbstractClient):
             console.print("No servicehandler currently set, set a servicehandler to continue.")
             return
         monitor_sock, monitor_id = self.sockethandler.RunHandler(ip_addr= ip_addr, port= port)
-        console.print(f"Monitor service listening at {ip_addr} on port {port}.")
-        comms_thread = threading.Thread(target=self.commshandler.RunHandler(), args=(), daemon=True)
-        console.print(f"Started CommsHandler thread for Monitor {monitor_id}.")
-        service_thread = threading.Thread(target=self.servicehandler.RunHandler(), args=(), daemon=True)
-        console.print(f"Started ServiceHandler thread for Monitor {monitor_id}.")
+        console.print(f"Monitor service ID #{monitor_id} listening at {ip_addr} on port {port}.")
+        comms_thread = threading.Thread(target=self.commshandler.RunHandler, args=(), daemon=True)
+        console.print(f"Started CommsHandler thread for Monitor #{monitor_id}.")
+        service_thread = threading.Thread(target=self.servicehandler.RunHandler, args=(), daemon=True)
+        console.print(f"Started ServiceHandler thread for Monitor #{monitor_id}.")
         end_event = threading.Event()
         monitor_event = threading.Event()
         try:
