@@ -107,8 +107,17 @@ class RemoteClient(AbstractClient):
         file.close()
         return
     
-    def SetSocketHandler(self, sockethandler):
+    def SetSocketHandler(self, sockethandler: SocketHandler) -> None:
         self.sockethandler = sockethandler
+        return
+
+    def SetCommsHandler(self, commshandler: CommsHandler) -> None:
+        self.commshandler = commshandler
+        return
+    
+    def SetServiceHandler(self, servicehandler: ServiceHandler) -> None:
+        self.servicehandler = servicehandler
+        return
     
     def ExitProgram():
         print("Exiting remote monitor...")
