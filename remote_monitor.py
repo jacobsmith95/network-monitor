@@ -148,7 +148,7 @@ class SocketHandler(AbstractHandler):
 
 class CommsHandler(AbstractHandler):
     """ """
-    def RunHandler(self, ) -> None:
+    def RunHandler(self, sock: socket,  queue_dict: dict, ) -> None:
         while not monitor_event.is_set():
             try:
                 console.print()
