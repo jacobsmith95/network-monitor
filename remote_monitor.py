@@ -13,6 +13,7 @@ from queue import Queue
 
 
 def main():
+    console = Console()
     client = RemoteClient()
     sockethandler = SocketHandler()
     client.SetSocketHandler(sockethandler)
@@ -64,15 +65,21 @@ class RemoteClient(AbstractClient):
         self.commshandler: CommsHandler = None
         self.servicehandler: ServiceHandler = None
 
-        self.in_socket_q: Queue = Queue()
-        self.out_socket_q: Queue = Queue()
-        self.in_comms_q: Queue = Queue()
-        self.out_comms_q: Queue = Queue()
-        self.in_service_q: Queue = Queue()
-        self.out_service_q: Queue = Queue()
+        self.insocketq: Queue = Queue()
+        self.outsocketq: Queue = Queue()
+        self.incommsq: Queue = Queue()
+        self.outcommsq: Queue = Queue()
+        self.inserviceq: Queue = Queue()
+        self.outserviceq: Queue = Queue()
 
-    def RunMonitor(self, ip_addr: str, port: str) -> None:
-        console = Console()
+        self.queuedict = {"in socket"  : self.insocketq,
+                          "out socket" : self.outsocketq,
+                          "in comms"   : self.incommsq,
+                          "out comms"  : self.outcommsq,
+                          "in service" : self.inserviceq,
+                          "out service": self.outserviceq}
+
+    def RunMonitor(self, ip_addr: str, port: str, console: Console) -> None:
         if not self.sockethandler:
             console.print("No sockethandler currently set, set a sockethandler to open a socket.")
             return
