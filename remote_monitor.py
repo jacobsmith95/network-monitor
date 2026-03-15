@@ -148,7 +148,7 @@ class SocketHandler(AbstractHandler):
 
 class CommsHandler(AbstractHandler):
     """ """
-    def RunHandler(self, monitor_sock: socket,  queue_dict: dict, monitor_event: threading.Event) -> None:
+    def RunHandler(self, monitor_sock: socket, monitor_id: str,  queue_dict: dict, monitor_event: threading.Event) -> None:
         incommsqueue = queue_dict["in comms"]
         outcommsqueue = queue_dict["out comms"]
         while not monitor_event.is_set():
@@ -170,13 +170,13 @@ class CommsHandler(AbstractHandler):
                     case _:
                         pass
             except socket.timeout:
-                monitor_queue.put()
+                outcommsqueue.put(f"Monitor #{monitor_id} connection lost: timeout.")
                 return
             except ConnectionAbortedError:
-                monitor_queue.put()
+                outcommsqueue.put(f"Monitor #{monitor_id} connection lost: aborted.")
                 return
             except ConnectionResetError:
-                monitor_queue.put()
+                outcommsqueue.put(f"Monitor #{monitor_id} connection lost: reset.")
                 return
             finally:
                 continue
