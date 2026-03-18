@@ -102,7 +102,9 @@ class RemoteClient(AbstractClient):
                 console.print("Waiting for server connection...")
                 server_socket, server_addr = monitor_sock.accept()
                 console.print(f"Connection from {server_addr} for Monitor #{monitor_id}.")
-
+                console.print(f"Starting CommsHandler and ServiceHandler threads for Monitor #{monitor_id}")
+                comms_thread.start()
+                service_thread.start()
                 message = self.outsocketq.get()
                 if message:
                     console.print(f"Monitor Message: {message}.")
