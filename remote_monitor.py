@@ -101,9 +101,21 @@ class RemoteClient(AbstractClient):
             while True:
                 console.print("Waiting for server connection...")
                 server_socket, server_addr = monitor_sock.accept()
+                console.print(f"Connection from {server_addr} for Monitor #{monitor_id}.")
 
-
-
+                message = self.outsocketq.get()
+                if message:
+                    console.print(f"Monitor Message: {message}.")
+                    console.print(f"Ending Client Thread at {server_addr} for Monitor #{monitor_id}.")
+                    monitor_event.set()
+                    comms_thread.join()
+                    service_thread.join()
+                    monitor_event.clear()
+                    server_socket.shutdown(1)
+                    server_socket.close()
+                    console.print(f"Server Socket closed at {server_addr} for Monitor #{monitor_id}.")
+                    monitor_event.clear()
+                continue
         finally:
             monitor_sock.close()
 
