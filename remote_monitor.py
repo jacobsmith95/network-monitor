@@ -162,27 +162,32 @@ class SocketHandler(AbstractHandler):
 
 class CommsHandler(AbstractHandler):
     """ """
-    def RunHandler(self, monitor_sock: socket, monitor_id: str,  queue_dict: dict, monitor_event: threading.Event) -> None:
+    def RunHandler(self, server_sock: socket, monitor_id: str,  queue_dict: dict, monitor_event: threading.Event) -> None:
         incommsqueue = queue_dict["in comms"]
         outcommsqueue = queue_dict["out comms"]
         while not monitor_event.is_set():
             try:
-                monitor_message = monitor_sock.recv(1024)
-                if monitor_message:
+                server_message = server_sock.recv(1024)
+                if server_message:
                     continue
-                match monitor_message.decode():
+                match server_message.decode():
                     case "check_status":
                         response = "status: on"
-                        monitor_sock.sendall(response.encode())
+                        server_sock.sendall(response.encode())
                         continue
                     case "start_services":
                         pass
                     case "end_services":
                         pass
-                    case "close_monitor":
-                        pass
+                    case "close_comms":
+                        response = "connection closed"
+                        server_sock.sendall(response.encode())
+                        continue
                     case _:
-                        pass
+                        config = json.loads(server_message.decode())
+                        response = "updated config"
+                        server_sock.sendall(response.encode())
+                        continue
             except socket.timeout:
                 outcommsqueue.put(f"Monitor #{monitor_id} connection lost: timeout.")
                 return
