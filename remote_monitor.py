@@ -6,8 +6,7 @@ import json
 import sys
 import socket
 import threading
-from abstract_classes import AbstractClient
-from abc import ABC, abstractmethod
+from abstract_classes import AbstractClient, AbstractHandler
 from rich.console import Console
 from typing import Tuple
 from queue import Queue
@@ -19,13 +18,6 @@ def main():
     sockethandler = SocketHandler()
     client.SetSocketHandler(sockethandler)
     client.RunMonitor()
-
-
-class AbstractHandler(ABC):
-    """ """
-    @abstractmethod
-    def RunHandler():
-        pass
 
 
 class RemoteClient(AbstractClient):
