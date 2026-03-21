@@ -212,7 +212,21 @@ class ServiceHandler(AbstractHandler):
         for key1 in self.config:
             for key2 in self.config[key1]:
                 thread_name = "thread_" + str(key2) + "_" + str(key1)
-                
+                match key2:
+                    case "http":
+                        pass
+                    case "https":
+                        pass
+                    case "icmp":
+                        pass
+                    case "dns":
+                        pass
+                    case "ntp":
+                        pass
+                    case "tcp":
+                        pass
+                    case "udp":
+                        pass
 
 
 
