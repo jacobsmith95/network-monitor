@@ -231,7 +231,11 @@ class ServiceHandler(AbstractHandler):
             message = "0"
             match message:
                 case "end":
-                    pass
+                    end_event.set()
+                    for thread in self.threads:
+                        thread.join()
+                    end_event.clear()
+                    return
                 case _:
                     pass
 
