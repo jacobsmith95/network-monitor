@@ -204,7 +204,13 @@ class CommsHandler(AbstractHandler):
 
 class ServiceHandler(AbstractHandler):
     """ """
-    pass
+    def __init__(self, monitor_config):
+        self.config = monitor_config
+        self.threads = set()
+
+    def RunHandler(self) -> None:
+        pass
+
 
 
 if __name__ == "__main__":
