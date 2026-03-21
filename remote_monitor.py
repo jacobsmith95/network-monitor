@@ -229,7 +229,12 @@ class ServiceHandler(AbstractHandler):
                         pass
         while True:
             message = "0"
-            
+            match message:
+                case "end":
+                    pass
+                case _:
+                    pass
+
 
 
 if __name__ == "__main__":
