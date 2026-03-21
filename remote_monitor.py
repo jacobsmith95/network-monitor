@@ -204,12 +204,15 @@ class CommsHandler(AbstractHandler):
 
 class ServiceHandler(AbstractHandler):
     """ """
-    def __init__(self, monitor_config):
-        self.config = monitor_config
-        self.threads = set()
+    def __init__(self, monitor_config: dict):
+        self.config: dict = monitor_config
+        self.threads: set = set()
 
     def RunHandler(self) -> None:
-        pass
+        for key1 in self.config:
+            for key2 in self.config[key1]:
+                thread_name = "thread_" + str(key2) + "_" + str(key1)
+                
 
 
 
