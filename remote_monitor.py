@@ -227,7 +227,9 @@ class ServiceHandler(AbstractHandler):
                         pass
                     case "udp":
                         pass
-
+        while True:
+            message = "0"
+            
 
 
 if __name__ == "__main__":
