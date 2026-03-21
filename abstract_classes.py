@@ -35,3 +35,10 @@ class AbstractClient(ABC):
     @abstractmethod
     def ExitProgram():
         pass
+
+
+class AbstractHandler(ABC):
+    """ """
+    @abstractmethod
+    def RunHandler():
+        pass
