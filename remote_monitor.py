@@ -6,7 +6,7 @@ import json
 import sys
 import socket
 import threading
-from abstract_monitor import AbstractClient
+from abstract_classes import AbstractClient
 from abc import ABC, abstractmethod
 from rich.console import Console
 from typing import Tuple
