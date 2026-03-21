@@ -6,6 +6,7 @@ import json
 import sys
 import socket
 import threading
+from abstract_monitor import AbstractClient
 from abc import ABC, abstractmethod
 from rich.console import Console
 from typing import Tuple
@@ -18,37 +19,6 @@ def main():
     sockethandler = SocketHandler()
     client.SetSocketHandler(sockethandler)
     client.RunMonitor()
-
-
-class AbstractClient(ABC):
-    """ """
-    @abstractmethod
-    def RunMonitor():
-        pass
-
-    @abstractmethod
-    def ReadSettings():
-        pass
-
-    @abstractmethod
-    def WriteSettings():
-        pass
-
-    @abstractmethod
-    def SetSocketHandler():
-        pass
-
-    @abstractmethod
-    def SetServiceHandler():
-        pass
-
-    @abstractmethod
-    def SetCommsHandler():
-        pass
-
-    @abstractmethod
-    def ExitProgram():
-        pass
 
 
 class AbstractHandler(ABC):
