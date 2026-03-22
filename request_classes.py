@@ -28,7 +28,7 @@ class PingService(AbstractRequest):
     def SetICMPPacket(self, ICMPPacket):
         self.packet = ICMPPacket
 
-    def RunRequest(self, host: str, ttl: int, timeout: int, sequence_number: int) -> Tuple[Any, float] | Tuple[Any, None]:
+    def NetRequest(self, host: str, ttl: int, timeout: int, sequence_number: int) -> Tuple[Any, float] | Tuple[Any, None]:
         with socket.socket(socket.AF_INET, socket.SOCK_RAW, socket.IPPROTO_ICMP) as sock:
             sock.setsockopt(socket.IPPROTO_IP, socket.IP_TTL, ttl)
             sock.settimeout(timeout)
@@ -52,7 +52,7 @@ class TracerouteService(AbstractRequest):
     def SetPingRequest(self, PingService):
         self.ping = PingService
 
-    def RunRequest(self, host: str, max_hops: int, pings_per_hop: int, verbose: bool) -> str:
+    def NetRequest(self, host: str, max_hops: int, pings_per_hop: int, verbose: bool) -> str:
         result = [f"{'Hop':>3} {'Address':<15} {'Min (ms)':>8} {'Avg (ms)':>8} {'Max (ms)':>8} {'Count':>5}"]
         for ttl in range(1, max_hops+1):
             if verbose:
@@ -82,7 +82,7 @@ class HttpService(AbstractRequest):
     def __init__(self):
         pass
 
-    def RunRequest(self, url: str) -> Tuple[bool, Optional[int]]:
+    def NetRequest(self, url: str) -> Tuple[bool, Optional[int]]:
         try:
             response: requests.Response = requests.get(url)
             up_status: bool = response.status_code < 400
@@ -96,7 +96,7 @@ class HttpsService(AbstractRequest):
     def __init__(self):
         pass
 
-    def RunRequest(self, url: str, timeout: int) -> Tuple[bool, Optional[int], str]:
+    def NetRequest(self, url: str, timeout: int) -> Tuple[bool, Optional[int], str]:
         try:
             headers: dict = {'User-Agent':'Mozilla/5.0'}
             response: requests.Response = requests.get(url, headers=headers, timeout=timeout)
@@ -115,7 +115,7 @@ class NtpService(AbstractRequest):
     def __init__(self):
         pass
 
-    def RunRequest(self, server: str) -> Tuple[bool, Optional[str]]:
+    def NetRequest(self, server: str) -> Tuple[bool, Optional[str]]:
         client = ntplib.NTPClient()
         try:
             response = client.request(server, version=3)
@@ -129,7 +129,7 @@ class DnsService(AbstractRequest):
     def __init__(self):
         pass
 
-    def RunRequest(self, server: str, query: str, record_type: str) -> Tuple[bool, Optional[str]]:
+    def NetRequest(self, server: str, query: str, record_type: str) -> Tuple[bool, Optional[str]]:
         try:
             resolver = dns.resolver.Resolver()
             resolver.nameservers = [socket.gethostbyname(server)]
@@ -145,7 +145,7 @@ class TcpPortService(AbstractRequest):
     def __init__(self):
         pass
 
-    def RunRequest(self, ip_address: str, port: int) -> Tuple[bool, Optional[str]]:
+    def NetRequest(self, ip_address: str, port: int) -> Tuple[bool, Optional[str]]:
         try:
             with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
                 sock.settimeout(3)
@@ -164,7 +164,7 @@ class UdpPortService(AbstractRequest):
     def __init__(self):
         pass
 
-    def RunRequest(self, ip_address: str, port: int) -> Tuple[bool, Optional[str]]:
+    def NetRequest(self, ip_address: str, port: int) -> Tuple[bool, Optional[str]]:
         try:
             with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
                 sock.settimeout(3)
