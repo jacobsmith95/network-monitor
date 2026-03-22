@@ -11,7 +11,11 @@ class AbstractRequest(ABC):
         pass
 
     @abstractmethod
-    def runRequest(self):
+    def RunRequest(self):
+        pass
+
+    @abstractmethod
+    def NetRequest(self):
         pass
 
 
