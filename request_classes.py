@@ -18,6 +18,7 @@ from abstract_classes import AbstractRequest
 from typing import Tuple, Any, Optional
 from time import ctime
 from socket import gaierror
+from queue import Queue
 
 
 class PingService(AbstractRequest):
@@ -96,7 +97,7 @@ class HttpService(AbstractRequest):
         except requests.RequestException:
             return False, None
         
-    def RunRequest(self):
+    def RunRequest(self, monitor_id: str, url: str, interval: int, out_queue: Queue, end_event: threading.Event):
         pass
         
 
