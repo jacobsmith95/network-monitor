@@ -5,6 +5,16 @@
 from abc import ABC, abstractmethod
 
 
+class AbstractRequest(ABC):
+    """the abstract class defining the behavior of concrete request classes"""
+    def __init__(self):
+        pass
+
+    @abstractmethod
+    def runRequest(self):
+        pass
+
+
 class AbstractClient(ABC):
     """ """
     @abstractmethod
