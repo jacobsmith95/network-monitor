@@ -98,8 +98,11 @@ class HttpService(AbstractRequest):
             return False, None
         
     def RunRequest(self, monitor_id: str, url: str, interval: int, out_queue: Queue, end_event: threading.Event):
-        pass
-        
+        while not end_event.is_set():
+            data = self.RunRequest(url)
+            print_time = time.asctime(time.localtime())
+            out_queue.put(f"{print_time} | ID: {monitor_id} | http | {url} | Server Up: {data[0]} | Status Code: {data[1]}")
+            time.sleep(interval)
 
 class HttpsService(AbstractRequest):
     """ """
