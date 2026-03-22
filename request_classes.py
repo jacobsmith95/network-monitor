@@ -43,6 +43,9 @@ class PingService(AbstractRequest):
             except socket.timeout:
                 return None, None
             
+    def RunRequest(self):
+        pass
+            
 
 class TracerouteService(AbstractRequest):
     """ """
@@ -75,6 +78,9 @@ class TracerouteService(AbstractRequest):
             if addr and addr[0] == host:
                 break
         return "\n".join(result)
+    
+    def RunRequest(self):
+        pass
 
 
 class HttpService(AbstractRequest):
@@ -89,6 +95,9 @@ class HttpService(AbstractRequest):
             return up_status, response.status_code
         except requests.RequestException:
             return False, None
+        
+    def RunRequest(self):
+        pass
         
 
 class HttpsService(AbstractRequest):
@@ -109,6 +118,9 @@ class HttpsService(AbstractRequest):
         except requests.RequestException as exc:
             return False, None, f"Error during request: {exc}."
         
+    def RunRequest(self):
+        pass
+        
 
 class NtpService(AbstractRequest):
     """ """
@@ -122,6 +134,9 @@ class NtpService(AbstractRequest):
             return True, ctime(response.tx_time)
         except (ntplib.NTPException, gaierror):
             return False, None
+        
+    def RunRequest(self):
+        pass
         
 
 class DnsService(AbstractRequest):
@@ -138,6 +153,9 @@ class DnsService(AbstractRequest):
             return True, result
         except (dns.exception.Timeout, dns.resolver.NoNameservers, dns.resolver.NoAnswer, gaierror) as exc:
             return False, f"Error during request: {exc}."
+        
+    def RunRequest(self):
+        pass
         
 
 class TcpPortService(AbstractRequest):
@@ -158,6 +176,9 @@ class TcpPortService(AbstractRequest):
         except Exception as exc:
             return False, f"Failed to check TCP port {port} on {ip_address} due to an error: {exc}."
         
+    def RunRequest(self):
+        pass
+        
 
 class UdpPortService(AbstractRequest):
     """ """
@@ -176,6 +197,9 @@ class UdpPortService(AbstractRequest):
                     return True, f"UDP port {port} on {ip_address} is open or no response was received."
         except Exception as exc:
             return False, f"Failed to check UDP port {port} on {ip_address} due to an error: {exc}."
+
+    def RunRequest(self):
+        pass
 
 
 class ICMPPacket:
