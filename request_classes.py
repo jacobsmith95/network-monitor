@@ -20,7 +20,7 @@ from time import ctime
 from socket import gaierror
 
 
-class PingService(RequestService):
+class PingService(AbstractRequest):
     """creates an ICMP packet and pings the given server"""
     def __init__(self):
         self.packet: ICMPPacket = None
@@ -44,7 +44,7 @@ class PingService(RequestService):
                 return None, None
             
 
-class TracerouteService(RequestService):
+class TracerouteService(AbstractRequest):
     """ """
     def __init__(self):
         self.ping: PingService = None
@@ -77,7 +77,7 @@ class TracerouteService(RequestService):
         return "\n".join(result)
 
 
-class HttpService(RequestService):
+class HttpService(AbstractRequest):
     """ """
     def __init__(self):
         pass
@@ -91,7 +91,7 @@ class HttpService(RequestService):
             return False, None
         
 
-class HttpsService(RequestService):
+class HttpsService(AbstractRequest):
     """ """
     def __init__(self):
         pass
@@ -110,7 +110,7 @@ class HttpsService(RequestService):
             return False, None, f"Error during request: {exc}."
         
 
-class NtpService(RequestService):
+class NtpService(AbstractRequest):
     """ """
     def __init__(self):
         pass
@@ -124,7 +124,7 @@ class NtpService(RequestService):
             return False, None
         
 
-class DnsService(RequestService):
+class DnsService(AbstractRequest):
     """ """
     def __init__(self):
         pass
@@ -140,7 +140,7 @@ class DnsService(RequestService):
             return False, f"Error during request: {exc}."
         
 
-class TcpPortService(RequestService):
+class TcpPortService(AbstractRequest):
     """ """
     def __init__(self):
         pass
@@ -159,7 +159,7 @@ class TcpPortService(RequestService):
             return False, f"Failed to check TCP port {port} on {ip_address} due to an error: {exc}."
         
 
-class UdpPortService(RequestService):
+class UdpPortService(AbstractRequest):
     """ """
     def __init__(self):
         pass
