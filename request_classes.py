@@ -220,11 +220,11 @@ class UdpPortService(AbstractRequest):
 
     def RunRequest(self, monitor_id: str, url: str, port: int, timeout: int, interval: int, out_queue: Queue, end_event: threading.Event):
         while not end_event.is_set():
-            data = self.RunRequest(url, port)
+            data = self.RunRequest(url, port, timeout)
             print_time = time.asctime(time.localtime())
             out_queue.put(f"{print_time} | ID: {monitor_id} | udp | {url} | {port} | Open: {data[0]} | {data[1]}")
             time.sleep(interval)
-            
+
 
 class ICMPPacket:
     """ """
