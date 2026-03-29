@@ -218,9 +218,13 @@ class UdpPortService(AbstractRequest):
         except Exception as exc:
             return False, f"Failed to check UDP port {port} on {ip_address} due to an error: {exc}."
 
-    def RunRequest(self):
-        pass
-
+    def RunRequest(self, monitor_id: str, url: str, port: int, timeout: int, interval: int, out_queue: Queue, end_event: threading.Event):
+        while not end_event.is_set():
+            data = self.RunRequest(url, port)
+            print_time = time.asctime(time.localtime())
+            out_queue.put(f"{print_time} | ID: {monitor_id} | udp | {url} | {port} | Open: {data[0]} | {data[1]}")
+            time.sleep(interval)
+            
 
 class ICMPPacket:
     """ """
