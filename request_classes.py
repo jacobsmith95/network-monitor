@@ -144,7 +144,11 @@ class NtpService(AbstractRequest):
             return False, None
         
     def RunRequest(self, monitor_id: str, url: str, interval: int, out_queue: Queue, end_event: threading.Event):
-        pass
+        while not end_event.is_set():
+            data = self.NetRequest(url)
+            print_time = time.asctime(time.localtime())
+            out_queue.put(f"{print_time} | ID: {monitor_id} | ntp | {url} | Up: {data[0]} | Server time: {data[1]}")
+            time.sleep(interval)
         
 
 class DnsService(AbstractRequest):
