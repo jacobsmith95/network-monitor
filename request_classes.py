@@ -80,8 +80,12 @@ class TracerouteService(AbstractRequest):
                 break
         return "\n".join(result)
     
-    def RunRequest(self):
-        pass
+    def RunRequest(self, monitor_id: str, url: str, max_hops: int, pings_per_hop: int, verbose: bool, interval: int, out_queue: Queue, end_event: threading.Event):
+        while not end_event.is_set():
+            data = self.RunRequest(url, max_hops, pings_per_hop, verbose)
+            print_time = time.asctime(time.localtime())
+            out_queue.put(f"{print_time} | ID: {monitor_id} | icmp | traceroute | {url} | Route: {data}")
+            time.sleep(interval)
 
 
 class HttpService(AbstractRequest):
@@ -103,6 +107,7 @@ class HttpService(AbstractRequest):
             print_time = time.asctime(time.localtime())
             out_queue.put(f"{print_time} | ID: {monitor_id} | http | {url} | Server Up: {data[0]} | Status Code: {data[1]}")
             time.sleep(interval)
+
 
 class HttpsService(AbstractRequest):
     """ """
