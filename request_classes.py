@@ -44,9 +44,13 @@ class PingService(AbstractRequest):
             except socket.timeout:
                 return None, None
             
-    def RunRequest(self):
-        pass
-            
+    def RunRequest(self, monitor_id: str, url: str, ttl: int, timeout: int, interval: int, out_queue: Queue, end_event: threading.Event):
+        while not end_event.is_set():
+            data = self.RunRequest(url, ttl, timeout)
+            print_time = time.asctime(time.localtime())
+            out_queue.put(f"{print_time} | ID: {monitor_id} | icmp | ping | {url} | Address: {data[0]} | Response Time (ms): {data[1]}")
+            time.sleep(interval)
+
 
 class TracerouteService(AbstractRequest):
     """ """
