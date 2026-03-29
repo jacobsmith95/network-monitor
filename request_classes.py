@@ -166,9 +166,12 @@ class DnsService(AbstractRequest):
         except (dns.exception.Timeout, dns.resolver.NoNameservers, dns.resolver.NoAnswer, gaierror) as exc:
             return False, f"Error during request: {exc}."
         
-    def RunRequest(self):
-        pass
-        
+    def RunRequest(self, monitor_id: str, url: str, query: str, record_type: str, interval: int, out_queue: Queue, end_event: threading.Event):
+        while not end_event.is_set():
+            data = self.RunRequest(url, query, record_type)
+            print_time = time.asctime(time.localtime())
+            out_queue.put(f"{print_time} | ID: {monitor_id} | dns | {url} | {query} | {record_type} | Up: {data[0]} | Data: {data[1]}")
+            time.sleep(interval)
 
 class TcpPortService(AbstractRequest):
     """ """
