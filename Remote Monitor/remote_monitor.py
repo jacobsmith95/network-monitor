@@ -9,7 +9,11 @@ def main():
     #console = Console()
     client = RemoteClient()
     sockethandler = SocketHandler()
+    commshandler = CommsHandler()
+    servicehandler = ServiceHandler()
     client.SetSocketHandler(sockethandler)
+    client.SetCommsHandler(commshandler)
+    client.SetServiceHandler(servicehandler)
     client.RunMonitor()
 
 if __name__ == "__main__":
