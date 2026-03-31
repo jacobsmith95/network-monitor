@@ -12,14 +12,6 @@ from typing import Tuple
 from queue import Queue
 
 
-def main():
-    console = Console()
-    client = RemoteClient()
-    sockethandler = SocketHandler()
-    client.SetSocketHandler(sockethandler)
-    client.RunMonitor()
-
-
 class RemoteClient(AbstractClient):
     """ """
     def __init__(self):
