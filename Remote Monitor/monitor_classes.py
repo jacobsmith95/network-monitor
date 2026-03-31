@@ -192,8 +192,3 @@ class ServiceHandler(AbstractHandler):
                     return
                 case _:
                     pass
-
-
-
-if __name__ == "__main__":
-    main()
