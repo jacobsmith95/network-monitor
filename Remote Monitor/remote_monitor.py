@@ -11,3 +11,6 @@ def main():
     sockethandler = SocketHandler()
     client.SetSocketHandler(sockethandler)
     client.RunMonitor()
+
+if __name__ == "__main__":
+    main()
