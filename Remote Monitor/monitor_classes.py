@@ -13,7 +13,7 @@ from queue import Queue
 
 
 class RemoteClient(AbstractClient):
-    """ """
+    """The concrete remote client class which runs the general monitor, reads and writes settings, and does handler injection and thread creation"""
     def __init__(self):
         self.sockethandler: SocketHandler = None
         self.commshandler: CommsHandler = None
@@ -105,7 +105,7 @@ class RemoteClient(AbstractClient):
 
 
 class SocketHandler(AbstractHandler):
-    """ """
+    """Concrete class for creating and listening to a socket in order to communicate with the managing server over TCP"""
     def RunHandler(self, ip_addr: str, port: str) -> Tuple[object, str]:
         monitor_id = ip_addr + '-' + port
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -115,7 +115,7 @@ class SocketHandler(AbstractHandler):
         return [sock, monitor_id]
 
 class CommsHandler(AbstractHandler):
-    """ """
+    """Concrete class for handling communications from the server and coordinating communication between the manager threads"""
     def RunHandler(self, server_sock: socket, monitor_id: str,  queue_dict: dict, monitor_event: threading.Event) -> None:
         incommsqueue = queue_dict["in comms"]
         outcommsqueue = queue_dict["out comms"]
@@ -157,7 +157,7 @@ class CommsHandler(AbstractHandler):
 
 
 class ServiceHandler(AbstractHandler):
-    """ """
+    """Concrete class for ServiceHandler, which creates service threads based on server communication"""
     def __init__(self, monitor_config: dict):
         self.config: dict = monitor_config
         self.threads: set = set()
