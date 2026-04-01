@@ -6,7 +6,7 @@ from abc import ABC, abstractmethod
 
 
 class AbstractRequest(ABC):
-    """the abstract class defining the behavior of concrete request classes"""
+    """the abstract request class defining the behavior of concrete request classes"""
     def __init__(self):
         pass
 
@@ -20,7 +20,7 @@ class AbstractRequest(ABC):
 
 
 class AbstractClient(ABC):
-    """ """
+    """the abstract client class defining the behavior of concrete client classes"""
     @abstractmethod
     def RunMonitor():
         pass
@@ -51,7 +51,7 @@ class AbstractClient(ABC):
 
 
 class AbstractHandler(ABC):
-    """ """
+    """the abstract handler class defining the behavior of concrete client classes"""
     @abstractmethod
     def RunHandler():
         pass
