@@ -6,6 +6,7 @@ from monitor_classes import RemoteClient, SocketHandler, CommsHandler, ServiceHa
 
 
 def main():
+    """Loads the concrete client class, the concrete handler classes, and injects the handlers into the client"""
     #console = Console()
     client = RemoteClient()
     sockethandler = SocketHandler()
