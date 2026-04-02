@@ -21,14 +21,14 @@ def main():
     client.SetServiceHandler(servicehandler)
 
     requestservices = []
-    requestservices.append(pingservice = PingService())
-    requestservices.append(tracerouteservice = TracerouteService())
-    requestservices.append(httpservice = HttpService())
-    requestservices.append(httpsservice = HttpsService())
-    requestservices.append(ntpservice = NtpService())
-    requestservices.append(dnsservice = DnsService())
-    requestservices.append(tcpportservice = TcpPortService())
-    requestservices.append(udpportservice = UdpPortService())
+    requestservices.append(Tuple("ping", pingservice = PingService()))
+    requestservices.append(Tuple("trace", tracerouteservice = TracerouteService()))
+    requestservices.append(Tuple("http", httpservice = HttpService()))
+    requestservices.append(Tuple("https", httpsservice = HttpsService()))
+    requestservices.append(Tuple("ntp", ntpservice = NtpService()))
+    requestservices.append(Tuple("dns", dnsservice = DnsService()))
+    requestservices.append(Tuple("tcp", tcpportservice = TcpPortService()))
+    requestservices.append(Tuple("udp", udpportservice = UdpPortService()))
 
 
 
