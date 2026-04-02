@@ -29,8 +29,8 @@ def main():
     requestservices.append(Tuple("dns", dnsservice = DnsService()))
     requestservices.append(Tuple("tcp", tcpportservice = TcpPortService()))
     requestservices.append(Tuple("udp", udpportservice = UdpPortService()))
-
-
+    for service in requestservices:
+        client.SetServiceEntry(service[0], service[1])
 
     client.RunMonitor()
 
