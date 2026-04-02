@@ -19,6 +19,8 @@ class RemoteClient(AbstractClient):
         self.commshandler: CommsHandler = None
         self.servicehandler: ServiceHandler = None
 
+        self.servicedict: dict = {}
+
         self.insocketq: Queue = Queue()
         self.outsocketq: Queue = Queue()
         self.incommsq: Queue = Queue()
