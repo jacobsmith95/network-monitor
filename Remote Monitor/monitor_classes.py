@@ -102,6 +102,7 @@ class RemoteClient(AbstractClient):
         return
     
     def SetServiceEntry(self, key: str, servicerequest: AbstractRequest) -> None:
+        self.servicedict.update({key: servicerequest})
         return
     
     def ExitProgram():
