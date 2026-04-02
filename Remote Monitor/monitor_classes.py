@@ -6,7 +6,7 @@ import json
 import sys
 import socket
 import threading
-from abstract_classes import AbstractClient, AbstractHandler
+from abstract_classes import AbstractClient, AbstractHandler, AbstractRequest
 from rich.console import Console
 from typing import Tuple
 from queue import Queue
@@ -101,7 +101,7 @@ class RemoteClient(AbstractClient):
         self.servicehandler = servicehandler
         return
     
-    def SetServiceEntry(self) -> None:
+    def SetServiceEntry(self, key: str, servicerequest: AbstractRequest) -> None:
         return
     
     def ExitProgram():
