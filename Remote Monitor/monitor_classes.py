@@ -101,6 +101,9 @@ class RemoteClient(AbstractClient):
         self.servicehandler = servicehandler
         return
     
+    def SetServiceEntry(self) -> None:
+        return
+    
     def ExitProgram():
         print("Exiting remote monitor...")
         sys.exit()
