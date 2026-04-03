@@ -168,16 +168,18 @@ class ServiceHandler(AbstractHandler):
         self.config: dict = monitor_config
         self.threads: set = set()
 
-    def RunHandler(self) -> None:
+    def RunHandler(self, serverdict: dict) -> None:
         for key1 in self.config:
             for key2 in self.config[key1]:
                 thread_name = "thread_" + str(key2) + "_" + str(key1)
                 match key2:
                     case "http":
-                        pass
+                        thread_name = threading.Thread(target=serverdict[key2])
                     case "https":
                         pass
-                    case "icmp":
+                    case "ping":
+                        pass
+                    case "trace":
                         pass
                     case "dns":
                         pass
