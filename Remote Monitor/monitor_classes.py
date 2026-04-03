@@ -174,7 +174,7 @@ class ServiceHandler(AbstractHandler):
                 thread_name = "thread_" + str(key2) + "_" + str(key1)
                 match key2:
                     case "http":
-                        thread_name = threading.Thread(target=serverdict[key2])
+                        thread_name = threading.Thread(target=serverdict[key2].runrequest(), args=(), daemon=True)
                     case "https":
                         pass
                     case "ping":
