@@ -45,6 +45,9 @@ class RemoteClient(AbstractClient):
         if not self.servicehandler:
             console.print("No servicehandler currently set, set a servicehandler to continue.")
             return
+        if not self.servicedict:
+            console.print("No services available, please add services.")
+            return
         monitor_sock, monitor_id = self.sockethandler.RunHandler(ip_addr= ip_addr, port= port)
         console.print(f"Monitor service ID #{monitor_id} listening at {ip_addr} on port {port}.")
         comms_thread = threading.Thread(target=self.commshandler.RunHandler, args=(), daemon=True)
@@ -168,12 +171,11 @@ class ServiceHandler(AbstractHandler):
         self.config: dict = monitor_config
         self.threads: set = set()
 
-    def RunHandler(self, serverdict: dict) -> None:
+    def RunHandler(self, serverdict: dict, end_event: threading.Event) -> None:
         for key1 in self.config:
             for key2 in self.config[key1]:
                 thread_name = threading.Thread(target=serverdict[key2].RunRequest(), args=(), daemon=True)
                 self.threads.add(thread_name)
-
         while True:
             message = "0"
             match message:
