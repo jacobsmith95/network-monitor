@@ -163,7 +163,7 @@ class CommsHandler(AbstractHandler):
 
 
 class ServiceHandler(AbstractHandler):
-    """Concrete class for ServiceHandler, which creates service threads based on server communication"""
+    """Concrete class for ServiceHandler, which creates service threads based configuration files"""
     def __init__(self, monitor_config: dict):
         self.config: dict = monitor_config
         self.threads: set = set()
