@@ -171,24 +171,9 @@ class ServiceHandler(AbstractHandler):
     def RunHandler(self, serverdict: dict) -> None:
         for key1 in self.config:
             for key2 in self.config[key1]:
-                thread_name = "thread_" + str(key2) + "_" + str(key1)
-                match key2:
-                    case "http":
-                        thread_name = threading.Thread(target=serverdict[key2].runrequest(), args=(), daemon=True)
-                    case "https":
-                        pass
-                    case "ping":
-                        pass
-                    case "trace":
-                        pass
-                    case "dns":
-                        pass
-                    case "ntp":
-                        pass
-                    case "tcp":
-                        pass
-                    case "udp":
-                        pass
+                thread_name = threading.Thread(target=serverdict[key2].RunRequest(), args=(), daemon=True)
+                self.threads.add(thread_name)
+
         while True:
             message = "0"
             match message:
