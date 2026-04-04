@@ -44,7 +44,8 @@ class PingService(AbstractRequest):
             except socket.timeout:
                 return None, None
             
-    def RunRequest(self, monitor_id: str, url: str, ttl: int, timeout: int, interval: int, out_queue: Queue, end_event: threading.Event):
+    def RunRequest(self, monitor_id: str, url: str, args: Tuple, out_queue: Queue, end_event: threading.Event):
+        ttl, timeout, interval = args[0], args[1], args[2]
         while not end_event.is_set():
             data = self.RunRequest(url, ttl, timeout)
             print_time = time.asctime(time.localtime())
@@ -84,7 +85,8 @@ class TracerouteService(AbstractRequest):
                 break
         return "\n".join(result)
     
-    def RunRequest(self, monitor_id: str, url: str, max_hops: int, pings_per_hop: int, verbose: bool, interval: int, out_queue: Queue, end_event: threading.Event):
+    def RunRequest(self, monitor_id: str, url: str, args: tuple, out_queue: Queue, end_event: threading.Event):
+        max_hops, pings_per_hop, verbose, interval = args[0], args[1], args[2], args[3]
         while not end_event.is_set():
             data = self.RunRequest(url, max_hops, pings_per_hop, verbose)
             print_time = time.asctime(time.localtime())
