@@ -134,7 +134,8 @@ class HttpsService(AbstractRequest):
         except requests.RequestException as exc:
             return False, None, f"Error during request: {exc}."
         
-    def RunRequest(self, monitor_id: str, url: str, interval: int, out_queue: Queue, end_event: threading.Event):
+    def RunRequest(self, monitor_id: str, url: str, args: Tuple, out_queue: Queue, end_event: threading.Event):
+        interval = args[0]
         while not end_event.is_set():
             data = self.RunRequest(url)
             print_time = time.asctime(time.localtime())
