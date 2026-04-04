@@ -180,7 +180,8 @@ class DnsService(AbstractRequest):
         except (dns.exception.Timeout, dns.resolver.NoNameservers, dns.resolver.NoAnswer, gaierror) as exc:
             return False, f"Error during request: {exc}."
         
-    def RunRequest(self, monitor_id: str, url: str, query: str, record_type: str, interval: int, out_queue: Queue, end_event: threading.Event):
+    def RunRequest(self, monitor_id: str, url: str, args: Tuple, out_queue: Queue, end_event: threading.Event):
+        query, record_type, interval = args[0], args[1], args[2]
         while not end_event.is_set():
             data = self.RunRequest(url, query, record_type)
             print_time = time.asctime(time.localtime())
