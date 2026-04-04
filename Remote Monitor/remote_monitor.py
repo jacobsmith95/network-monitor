@@ -3,7 +3,7 @@
 #
 
 from monitor_classes import RemoteClient, SocketHandler, CommsHandler, ServiceHandler
-from request_classes import PingService, TracerouteService, HttpService, HttpsService, NtpService, DnsService, TcpPortService, UdpPortService
+from request_classes import PingService, TracerouteService, HttpService, HttpsService, NtpService, DnsService, TcpPortService, UdpPortService, ICMPPacket
 from typing import Tuple
 
 
@@ -22,8 +22,10 @@ def main():
 
     requestservices = []
     requestservices.append(Tuple("ping", pingservice = PingService()))
+    icmpservice = ICMPPacket()
+    requestservices[0][1].SetICMPPacket(icmpservice)
     requestservices.append(Tuple("trace", tracerouteservice = TracerouteService()))
-    requestservices[1][1].setpingservice(requestservices[0][1])
+    requestservices[1][1].SetPingService(requestservices[0][1])
     requestservices.append(Tuple("http", httpservice = HttpService()))
     requestservices.append(Tuple("https", httpsservice = HttpsService()))
     requestservices.append(Tuple("ntp", ntpservice = NtpService()))
