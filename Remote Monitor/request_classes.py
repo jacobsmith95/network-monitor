@@ -58,7 +58,7 @@ class TracerouteService(AbstractRequest):
     def __init__(self):
         self.ping: PingService = None
 
-    def SetPingRequest(self, PingService):
+    def SetPingService(self, PingService):
         self.ping = PingService
 
     def NetRequest(self, host: str, max_hops: int, pings_per_hop: int, verbose: bool) -> str:
