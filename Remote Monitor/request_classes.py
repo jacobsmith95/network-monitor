@@ -85,7 +85,7 @@ class TracerouteService(AbstractRequest):
                 break
         return "\n".join(result)
     
-    def RunRequest(self, monitor_id: str, url: str, args: tuple, out_queue: Queue, end_event: threading.Event):
+    def RunRequest(self, monitor_id: str, url: str, args: Tuple, out_queue: Queue, end_event: threading.Event):
         max_hops, pings_per_hop, verbose, interval = args[0], args[1], args[2], args[3]
         while not end_event.is_set():
             data = self.RunRequest(url, max_hops, pings_per_hop, verbose)
@@ -107,7 +107,8 @@ class HttpService(AbstractRequest):
         except requests.RequestException:
             return False, None
         
-    def RunRequest(self, monitor_id: str, url: str, interval: int, out_queue: Queue, end_event: threading.Event):
+    def RunRequest(self, monitor_id: str, url: str, args: Tuple, out_queue: Queue, end_event: threading.Event):
+        interval = args[0]
         while not end_event.is_set():
             data = self.RunRequest(url)
             print_time = time.asctime(time.localtime())
