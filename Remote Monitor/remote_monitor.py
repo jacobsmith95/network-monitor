@@ -23,6 +23,7 @@ def main():
     requestservices = []
     requestservices.append(Tuple("ping", pingservice = PingService()))
     requestservices.append(Tuple("trace", tracerouteservice = TracerouteService()))
+    requestservices[1][1].setpingservice(requestservices[0][1])
     requestservices.append(Tuple("http", httpservice = HttpService()))
     requestservices.append(Tuple("https", httpsservice = HttpsService()))
     requestservices.append(Tuple("ntp", ntpservice = NtpService()))
