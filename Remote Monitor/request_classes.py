@@ -24,10 +24,10 @@ from queue import Queue
 class PingService(AbstractRequest):
     """creates an ICMP packet and pings the given server"""
     def __init__(self):
-        self.packet: ICMPPacket = None
+        self.icmpservice: ICMPPacket = None
 
     def SetICMPService(self, ICMPPacket):
-        self.packet = ICMPPacket
+        self.icmpservice = ICMPPacket
 
     def NetRequest(self, host: str, ttl: int, timeout: int, sequence_number: int) -> Tuple[Any, float] | Tuple[Any, None]:
         with socket.socket(socket.AF_INET, socket.SOCK_RAW, socket.IPPROTO_ICMP) as sock:
