@@ -1,6 +1,5 @@
-#
-#
-#
+#This file contains all of the abstract classes for the remote monitor.
+#Each class is a contract that the concrete classes must fulfill, delineating __init__ requirements and necessary methods.
 
 from abc import ABC, abstractmethod
 
@@ -51,7 +50,7 @@ class AbstractClient(ABC):
 
 
 class AbstractHandler(ABC):
-    """the abstract handler class defining the behavior of concrete client classes"""
+    """the abstract handler class defining the behavior of concrete handler classes"""
     @abstractmethod
     def RunHandler():
         pass
