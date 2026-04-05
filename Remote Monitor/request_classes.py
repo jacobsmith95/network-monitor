@@ -26,7 +26,7 @@ class PingService(AbstractRequest):
     def __init__(self):
         self.packet: ICMPPacket = None
 
-    def SetICMPPacket(self, ICMPPacket):
+    def SetICMPService(self, ICMPPacket):
         self.packet = ICMPPacket
 
     def NetRequest(self, host: str, ttl: int, timeout: int, sequence_number: int) -> Tuple[Any, float] | Tuple[Any, None]:
