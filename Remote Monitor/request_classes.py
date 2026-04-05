@@ -1,6 +1,7 @@
-#
-#
-#
+#This is the file containing the classes for network requests.
+#Each network request class contains at least 2 methods: NetRequest and RunRequest.
+#NetRequest is the method that contains the network check logic for each protocol type.
+#RunRequest contains the logic for checking the threading end_event and running the NetRequest method once each given interval.
 
 import socket
 import time
