@@ -1,6 +1,6 @@
-#
-#
-#
+#The file containing the main function for the remote monitoring client.
+#This function loads the client class, creates new instances of needed dependencies, and then injects those dependencies into the client.
+#Finally, it runs the client using the RunMonitor method.
 
 from monitor_classes import RemoteClient, SocketHandler, CommsHandler, ServiceHandler
 from request_classes import PingService, TracerouteService, HttpService, HttpsService, NtpService, DnsService, TcpPortService, UdpPortService, ICMPPacket
