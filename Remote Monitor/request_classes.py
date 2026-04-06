@@ -23,7 +23,7 @@ from queue import Queue
 
 
 class PingService(AbstractRequest):
-    """creates an ICMP packet and pings the given server"""
+    """The class governing methods to ping a given server and perform the periodic network ping check"""
     def __init__(self):
         self.icmpservice: ICMPPacket = None
 
