@@ -23,7 +23,7 @@ from queue import Queue
 
 
 class PingService(AbstractRequest):
-    """The class governing methods to ping a given server and perform the periodic network ping check"""
+    """The class governing methods to ping a given address and perform the periodic network ping check"""
     def __init__(self):
         self.icmpservice: ICMPPacket = None
 
@@ -55,7 +55,7 @@ class PingService(AbstractRequest):
 
 
 class TracerouteService(AbstractRequest):
-    """ """
+    """The class governing the methods to traceroute a given address and perform the periodic traceroute check"""
     def __init__(self):
         self.ping: PingService = None
 
