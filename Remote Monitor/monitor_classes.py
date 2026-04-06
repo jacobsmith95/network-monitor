@@ -1,6 +1,6 @@
-#
-#
-#
+#This file contains the necessary classes to run the monitor, including the Remote client and its dependencies.
+#Those dependencies are the SocketHandler, CommsHandler, and ServiceHandler classes.
+#These classes perform the primary functions of the monitor and communicate via Queues when run as independent threads.
 
 import json
 import sys
