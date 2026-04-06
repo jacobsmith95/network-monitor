@@ -96,7 +96,7 @@ class TracerouteService(AbstractRequest):
 
 
 class HttpService(AbstractRequest):
-    """The class governing methods to perform an http check on a given address and perform the periodic http check"""
+    """The class governing methods to perform an HTTP check on a given address and perform the periodic HTTP check"""
     def __init__(self):
         pass
 
@@ -118,7 +118,7 @@ class HttpService(AbstractRequest):
 
 
 class HttpsService(AbstractRequest):
-    """ """
+    """The class governing the methods to perform a HTTPS check on a given server and to perform the periodic HTTPS check"""
     def __init__(self):
         pass
 
