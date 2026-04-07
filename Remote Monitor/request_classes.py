@@ -245,7 +245,7 @@ class UdpPortService(AbstractRequest):
 
 
 class ICMPPacket:
-    """ """
+    """The class governing methods to create a bespoke ICMP packet and to provide that packet with a correct checksum."""
     def __init__(self):
         pass
 
