@@ -23,7 +23,7 @@ from queue import Queue
 
 
 class PingService(AbstractRequest):
-    """The class governing methods to ping a given address and perform the periodic network ping check"""
+    """The class governing methods to ping a given address and perform the periodic network ping check."""
     def __init__(self):
         self.icmpservice: ICMPPacket = None
 
@@ -55,7 +55,7 @@ class PingService(AbstractRequest):
 
 
 class TracerouteService(AbstractRequest):
-    """The class governing the methods to traceroute a given address and perform the periodic traceroute check"""
+    """The class governing the methods to traceroute a given address and perform the periodic traceroute check."""
     def __init__(self):
         self.ping: PingService = None
 
@@ -96,7 +96,7 @@ class TracerouteService(AbstractRequest):
 
 
 class HttpService(AbstractRequest):
-    """The class governing methods to perform an HTTP check on a given address and perform the periodic HTTP check"""
+    """The class governing methods to perform an HTTP check on a given address and perform the periodic HTTP check."""
     def __init__(self):
         pass
 
@@ -118,7 +118,7 @@ class HttpService(AbstractRequest):
 
 
 class HttpsService(AbstractRequest):
-    """The class governing the methods to perform a HTTPS check on a given server and to perform the periodic HTTPS check"""
+    """The class governing the methods to perform a HTTPS check on a given server and to perform the periodic HTTPS check."""
     def __init__(self):
         pass
 
@@ -145,7 +145,7 @@ class HttpsService(AbstractRequest):
         
 
 class NtpService(AbstractRequest):
-    """The class governing the methods to perform NTP checks on a given NTP server and to perform the periodic NTP checks"""
+    """The class governing the methods to perform NTP checks on a given NTP server and to perform the periodic NTP checks."""
     def __init__(self):
         pass
 
@@ -167,7 +167,7 @@ class NtpService(AbstractRequest):
         
 
 class DnsService(AbstractRequest):
-    """ """
+    """The class governing the methods to perform DNS checks on a given server and to perform periodic DNS checks."""
     def __init__(self):
         pass
 
