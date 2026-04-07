@@ -218,7 +218,7 @@ class TcpPortService(AbstractRequest):
 
 
 class UdpPortService(AbstractRequest):
-    """ """
+    """The class governing methods to check a specific port on a specific server using UDP, and to perform the same check periodically."""
     def __init__(self):
         pass
 
