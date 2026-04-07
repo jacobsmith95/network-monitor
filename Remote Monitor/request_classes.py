@@ -145,7 +145,7 @@ class HttpsService(AbstractRequest):
         
 
 class NtpService(AbstractRequest):
-    """ """
+    """The class governing the methods to perform NTP checks on a given NTP server and to perform the periodic NTP checks"""
     def __init__(self):
         pass
 
