@@ -191,7 +191,7 @@ class DnsService(AbstractRequest):
 
 
 class TcpPortService(AbstractRequest):
-    """ """
+    """The class governing methods to check a specific port on a specific server using TCP, and to perform the same check periodically."""
     def __init__(self):
         pass
 
