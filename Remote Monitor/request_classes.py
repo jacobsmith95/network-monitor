@@ -258,6 +258,7 @@ class ICMPPacket:
         pass
 
     def CreatePacket(self, icmp_type: int, icmp_code: int, sequence_num: int, data_size: int) -> bytes:
+        """Creates an ICMP packet, requires an icmp_type, icmp_code, sequence_num, and data_size; returns a packet of bytes."""
         thread_id = threading.get_ident()
         proc_id = os.getpid()
         icmp_id = zlib.crc32(f"{thread_id}{proc_id}".encode()) & 0xffff
@@ -269,6 +270,7 @@ class ICMPPacket:
         return header + data
     
     def CalculateCheckSum(self, data: bytes) -> int:
+        """Calculates a checksum for the given data; returns that checksum as an integer."""
         check_sum: int = 0
         for i in range(0, len(data), 2):
             curr_num: int = (data[i] << 8) + (data[i+1])
