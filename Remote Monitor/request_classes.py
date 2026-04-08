@@ -25,12 +25,15 @@ from queue import Queue
 class PingService(AbstractRequest):
     """The class governing methods to ping a given address and perform the periodic network ping check."""
     def __init__(self):
+        """Initializes the PingService instance with an unset icmpservice."""
         self.icmpservice: ICMPPacket = None
 
     def SetICMPService(self, ICMPservice: ICMPPacket):
+        """Injects an ICMP service for PingService to use."""
         self.icmpservice = ICMPservice
 
     def NetRequest(self, host: str, ttl: int, timeout: int, sequence_number: int) -> Tuple[Any, float] | Tuple[Any, None]:
+        """Runs a ping request, requiring a host, time to live, timeout value, and a sequence number, returns a tuple with the address and response time."""
         with socket.socket(socket.AF_INET, socket.SOCK_RAW, socket.IPPROTO_ICMP) as sock:
             sock.setsockopt(socket.IPPROTO_IP, socket.IP_TTL, ttl)
             sock.settimeout(timeout)
@@ -46,9 +49,10 @@ class PingService(AbstractRequest):
                 return None, None
             
     def RunRequest(self, monitor_id: str, url: str, args: Tuple, out_queue: Queue, end_event: threading.Event):
+        """Deconstructs an arg tuple into the needed variables, and runs a NetRequest each time interval."""
         ttl, timeout, interval = args[0], args[1], args[2]
         while not end_event.is_set():
-            data = self.RunRequest(url, ttl, timeout)
+            data = self.NetRequest(url, ttl, timeout)
             print_time = time.asctime(time.localtime())
             out_queue.put(f"{print_time} | ID: {monitor_id} | icmp | ping | {url} | Address: {data[0]} | Response Time (ms): {data[1]}")
             time.sleep(interval)
