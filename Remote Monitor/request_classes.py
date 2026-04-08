@@ -33,7 +33,7 @@ class PingService(AbstractRequest):
         self.icmpservice = ICMPservice
 
     def NetRequest(self, host: str, ttl: int, timeout: int, sequence_number: int) -> Tuple[Any, float] | Tuple[Any, None]:
-        """Runs a ping request, requiring a host, time to live, timeout value, and a sequence number, returns a tuple with the address and response time."""
+        """Runs a ping request, requiring a host, time to live, timeout value, and a sequence number; returns a tuple with the address and response time."""
         with socket.socket(socket.AF_INET, socket.SOCK_RAW, socket.IPPROTO_ICMP) as sock:
             sock.setsockopt(socket.IPPROTO_IP, socket.IP_TTL, ttl)
             sock.settimeout(timeout)
@@ -61,12 +61,15 @@ class PingService(AbstractRequest):
 class TracerouteService(AbstractRequest):
     """The class governing the methods to traceroute a given address and perform the periodic traceroute check."""
     def __init__(self):
+        """Initializes a TracerouteService instance with an unset PingService."""
         self.ping: PingService = None
 
     def SetPingService(self, PingService):
+        """Sets a PingService for the TracerouteService to use."""
         self.ping = PingService
 
     def NetRequest(self, host: str, max_hops: int, pings_per_hop: int, verbose: bool) -> str:
+        """Performs a bespoke traceroute request on the given address, requires a host, max_hops, pings_per_hop, and verbose; returns a string with the traceroute information for each hop."""
         result = [f"{'Hop':>3} {'Address':<15} {'Min (ms)':>8} {'Avg (ms)':>8} {'Max (ms)':>8} {'Count':>5}"]
         for ttl in range(1, max_hops+1):
             if verbose:
@@ -91,6 +94,7 @@ class TracerouteService(AbstractRequest):
         return "\n".join(result)
     
     def RunRequest(self, monitor_id: str, url: str, args: Tuple, out_queue: Queue, end_event: threading.Event):
+        """Deconstructs the arg tuple and runs a NetRequest each given time interval."""
         max_hops, pings_per_hop, verbose, interval = args[0], args[1], args[2], args[3]
         while not end_event.is_set():
             data = self.NetRequest(url, max_hops, pings_per_hop, verbose)
