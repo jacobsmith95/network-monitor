@@ -93,7 +93,7 @@ class TracerouteService(AbstractRequest):
     def RunRequest(self, monitor_id: str, url: str, args: Tuple, out_queue: Queue, end_event: threading.Event):
         max_hops, pings_per_hop, verbose, interval = args[0], args[1], args[2], args[3]
         while not end_event.is_set():
-            data = self.RunRequest(url, max_hops, pings_per_hop, verbose)
+            data = self.NetRequest(url, max_hops, pings_per_hop, verbose)
             print_time = time.asctime(time.localtime())
             out_queue.put(f"{print_time} | ID: {monitor_id} | icmp | traceroute | {url} | Route: {data}")
             time.sleep(interval)
@@ -115,7 +115,7 @@ class HttpService(AbstractRequest):
     def RunRequest(self, monitor_id: str, url: str, args: Tuple, out_queue: Queue, end_event: threading.Event):
         interval = args[0]
         while not end_event.is_set():
-            data = self.RunRequest(url)
+            data = self.NetRequest(url)
             print_time = time.asctime(time.localtime())
             out_queue.put(f"{print_time} | ID: {monitor_id} | http | {url} | Server Up: {data[0]} | Status Code: {data[1]}")
             time.sleep(interval)
@@ -142,7 +142,7 @@ class HttpsService(AbstractRequest):
     def RunRequest(self, monitor_id: str, url: str, args: Tuple, out_queue: Queue, end_event: threading.Event):
         interval = args[0]
         while not end_event.is_set():
-            data = self.RunRequest(url)
+            data = self.NetRequest(url)
             print_time = time.asctime(time.localtime())
             out_queue.put(f"{print_time} | ID: {monitor_id} | https | {url} | Server Up: {data[0]} | Status Code: {data[1]}")
             time.sleep(interval)
@@ -188,7 +188,7 @@ class DnsService(AbstractRequest):
     def RunRequest(self, monitor_id: str, url: str, args: Tuple, out_queue: Queue, end_event: threading.Event):
         query, record_type, interval = args[0], args[1], args[2]
         while not end_event.is_set():
-            data = self.RunRequest(url, query, record_type)
+            data = self.NetRequest(url, query, record_type)
             print_time = time.asctime(time.localtime())
             out_queue.put(f"{print_time} | ID: {monitor_id} | dns | {url} | {query} | {record_type} | Up: {data[0]} | Data: {data[1]}")
             time.sleep(interval)
@@ -215,7 +215,7 @@ class TcpPortService(AbstractRequest):
     def RunRequest(self, monitor_id: str, url: str, args: Tuple, out_queue: Queue, end_event: threading.Event):
         port, interval = args[0], args[1]
         while not end_event.is_set():
-            data = self.RunRequest(url, port)
+            data = self.NetRequest(url, port)
             print_time = time.asctime(time.localtime())
             out_queue.put(f"{print_time} | ID: {monitor_id} | tcp | {url} | {port} | Open: {data[0]} | {data[1]}")
             time.sleep(interval)
@@ -242,7 +242,7 @@ class UdpPortService(AbstractRequest):
     def RunRequest(self, monitor_id: str, url: str, args: Tuple, out_queue: Queue, end_event: threading.Event):
         port, timeout, interval = args[0], args[1], args[2]
         while not end_event.is_set():
-            data = self.RunRequest(url, port, timeout)
+            data = self.NetRequest(url, port, timeout)
             print_time = time.asctime(time.localtime())
             out_queue.put(f"{print_time} | ID: {monitor_id} | udp | {url} | {port} | Open: {data[0]} | {data[1]}")
             time.sleep(interval)
