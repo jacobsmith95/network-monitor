@@ -162,6 +162,7 @@ class NtpService(AbstractRequest):
         pass
 
     def NetRequest(self, server: str) -> Tuple[bool, Optional[str]]:
+        """Performs an NTP request against the given server; requires a server address and returns a tuple with the status and the server time."""
         client = ntplib.NTPClient()
         try:
             response = client.request(server, version=3)
@@ -170,6 +171,7 @@ class NtpService(AbstractRequest):
             return False, None
         
     def RunRequest(self, monitor_id: str, url: str, args: Tuple, out_queue: Queue, end_event: threading.Event):
+        """Deconstructs the arg tuple and runs a NetRequest each given time interval."""
         interval = args[0]
         while not end_event.is_set():
             data = self.NetRequest(url)
