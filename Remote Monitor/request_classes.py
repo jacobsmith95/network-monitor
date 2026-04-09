@@ -133,6 +133,7 @@ class HttpsService(AbstractRequest):
         pass
 
     def NetRequest(self, url: str, timeout: int) -> Tuple[bool, Optional[int], str]:
+        """Performs an HTTPS request against the given server; requires a url and returns a tuple containing the status and response code."""
         try:
             headers: dict = {'User-Agent':'Mozilla/5.0'}
             response: requests.Response = requests.get(url, headers=headers, timeout=timeout)
@@ -146,6 +147,7 @@ class HttpsService(AbstractRequest):
             return False, None, f"Error during request: {exc}."
         
     def RunRequest(self, monitor_id: str, url: str, args: Tuple, out_queue: Queue, end_event: threading.Event):
+        """Deconstructs the arg tuple and runs a NetRequest each given time interval."""
         interval = args[0]
         while not end_event.is_set():
             data = self.NetRequest(url)
