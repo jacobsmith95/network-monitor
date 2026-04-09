@@ -111,6 +111,7 @@ class RemoteClient(AbstractClient):
         return
     
     def ExitProgram():
+        """Exits the program nicely."""
         print("Exiting remote monitor...")
         sys.exit()
 
