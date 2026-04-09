@@ -81,6 +81,7 @@ class RemoteClient(AbstractClient):
             monitor_sock.close()
 
     def ReadSettings(monitor_id: str) -> str:
+        """Reads the configuration settings from the monitor config file; requires a monitor id and returns a config json."""
         with open(f"monitor_config_{monitor_id}.txt", "r") as file:
             config = json.load(file)
         file.close()
