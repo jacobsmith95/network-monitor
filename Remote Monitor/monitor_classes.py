@@ -88,6 +88,7 @@ class RemoteClient(AbstractClient):
         return config
     
     def WriteSettings(monitor_id: str, config: str) -> None:
+        """Writes a new config json to the monitor config file; requires a config json, returns None."""
         with open(f"monitor_config_{monitor_id}.txt", "w") as file:
             json.dump(config, file)
         file.close()
