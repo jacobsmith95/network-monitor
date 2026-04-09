@@ -109,6 +109,7 @@ class HttpService(AbstractRequest):
         pass
 
     def NetRequest(self, url: str) -> Tuple[bool, Optional[int]]:
+        """Runs a network request against a given server using HTTP, requires a url and returns a Tuple with the status and response code."""
         try:
             response: requests.Response = requests.get(url)
             up_status: bool = response.status_code < 400
@@ -117,6 +118,7 @@ class HttpService(AbstractRequest):
             return False, None
         
     def RunRequest(self, monitor_id: str, url: str, args: Tuple, out_queue: Queue, end_event: threading.Event):
+        """Deconstructs the arg typle and runs a NetRequest each given time interval."""
         interval = args[0]
         while not end_event.is_set():
             data = self.NetRequest(url)
