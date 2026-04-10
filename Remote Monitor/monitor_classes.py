@@ -110,6 +110,7 @@ class RemoteClient(AbstractClient):
         return
     
     def SetServiceEntry(self, key: str, servicerequest: AbstractRequest) -> None:
+        """Places or updates an entry in the servicedict when passed a key string and an AbstractRequest object."""
         self.servicedict.update({key: servicerequest})
         return
     
