@@ -95,11 +95,12 @@ class RemoteClient(AbstractClient):
         return
     
     def SetSocketHandler(self, sockethandler: AbstractHandler) -> None:
-        """Sets the sockethandler variable when passed a SocketHandler object."""
+        """Sets the sockethandler variable when passed an AbstractHandler object."""
         self.sockethandler = sockethandler
         return
 
     def SetCommsHandler(self, commshandler: AbstractHandler) -> None:
+        """Sets the commshandler variable when passed an AbstractHandler object."""
         self.commshandler = commshandler
         return
     
