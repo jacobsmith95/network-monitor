@@ -95,6 +95,7 @@ class RemoteClient(AbstractClient):
         return
     
     def SetSocketHandler(self, sockethandler: AbstractHandler) -> None:
+        """Sets the sockethandler variable when passed a SocketHandler object."""
         self.sockethandler = sockethandler
         return
 
