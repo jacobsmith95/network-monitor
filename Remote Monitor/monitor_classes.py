@@ -105,6 +105,7 @@ class RemoteClient(AbstractClient):
         return
     
     def SetServiceHandler(self, servicehandler: AbstractHandler) -> None:
+        """Sets the servicehandler variable when passed an AbstractHandler object."""
         self.servicehandler = servicehandler
         return
     
