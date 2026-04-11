@@ -197,6 +197,7 @@ class DnsService(AbstractRequest):
             return False, f"Error during request: {exc}."
         
     def RunRequest(self, monitor_id: str, url: str, args: Tuple, out_queue: Queue, end_event: threading.Event):
+        """Deconstructs the arg tuple and runs a NetRequest each given time interval."""
         query, record_type, interval = args[0], args[1], args[2]
         while not end_event.is_set():
             data = self.NetRequest(url, query, record_type)
