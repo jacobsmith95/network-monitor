@@ -186,6 +186,7 @@ class DnsService(AbstractRequest):
         pass
 
     def NetRequest(self, server: str, query: str, record_type: str) -> Tuple[bool, Optional[str]]:
+        """Performs a DNS request against the given server; requires a server, a DNS query, and a record type, returns a tuple with the status and the result."""
         try:
             resolver = dns.resolver.Resolver()
             resolver.nameservers = [socket.gethostbyname(server)]
