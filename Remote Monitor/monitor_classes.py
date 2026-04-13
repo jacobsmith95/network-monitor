@@ -179,6 +179,7 @@ class ServiceHandler(AbstractHandler):
         self.threads: set = set()
 
     def RunHandler(self, serverdict: dict, end_event: threading.Event) -> None:
+        """Method that reads the configuration information for the monitor, and starts a RunRequest thread for the required requests from the loaded RequestService dictionary."""
         for key1 in self.config:
             for key2 in self.config[key1]:
                 thread_name = threading.Thread(target=serverdict[key2].RunRequest(), args=(), daemon=True)
