@@ -212,6 +212,7 @@ class TcpPortService(AbstractRequest):
         pass
 
     def NetRequest(self, ip_address: str, port: int) -> Tuple[bool, Optional[str]]:
+        """Performs a TCP request against the given address and port; requires an address and port, returns a tuple with the status and code."""
         try:
             with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
                 sock.settimeout(3)
