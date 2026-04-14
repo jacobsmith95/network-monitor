@@ -36,6 +36,7 @@ class RemoteClient(AbstractClient):
                           "out service": self.outserviceq}
 
     def RunMonitor(self, ip_addr: str, port: str, console: Console) -> None:
+        """Method to run the primary monitor loop; checks for injected dependencies, then creates threads for each dependency before running the core function while-loop."""
         if not self.sockethandler:
             console.print("No sockethandler currently set, set a sockethandler to open a socket.")
             return
