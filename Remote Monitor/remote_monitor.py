@@ -5,12 +5,10 @@
 from monitor_classes import RemoteClient, SocketHandler, CommsHandler, ServiceHandler
 from request_classes import PingService, TracerouteService, HttpService, HttpsService, NtpService, DnsService, TcpPortService, UdpPortService, ICMPPacket
 from typing import Tuple
-from rich.console import Console
 
 
 def main():
     """Loads the concrete client class, the concrete handler classes, and injects the handlers into the client"""
-    console = Console()
 
     client = RemoteClient()
 
