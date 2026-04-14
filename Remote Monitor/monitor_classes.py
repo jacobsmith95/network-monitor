@@ -134,6 +134,7 @@ class SocketHandler(AbstractHandler):
 class CommsHandler(AbstractHandler):
     """Concrete class for handling communications from the server and coordinating communication between the manager threads"""
     def RunHandler(self, server_sock: socket, monitor_id: str,  queue_dict: dict, monitor_event: threading.Event) -> None:
+        """Method to take messages from the socket (from the server), parse them, and then move those messages to the relevant thread using queues."""
         incommsqueue = queue_dict["in comms"]
         outcommsqueue = queue_dict["out comms"]
         while not monitor_event.is_set():
