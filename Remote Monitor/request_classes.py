@@ -254,6 +254,7 @@ class UdpPortService(AbstractRequest):
             return False, f"Failed to check UDP port {port} on {ip_address} due to an error: {exc}."
 
     def RunRequest(self, monitor_id: str, url: str, args: Tuple, out_queue: Queue, end_event: threading.Event):
+        """Deconstructs the arg tuple and runs a NetRequest for each given time interval."""
         port, timeout, interval = args[0], args[1], args[2]
         while not end_event.is_set():
             data = self.NetRequest(url, port, timeout)
