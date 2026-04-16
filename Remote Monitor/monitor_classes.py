@@ -24,12 +24,12 @@ class RemoteClient(AbstractClient):
 
         servicedict: a dictionary containing the AbstractRequest objects (services) that can be used to run network requests
 
-        insocketq: the input queue for the sockethandler
-        outsocketq: the output queue for the sockethandler
-        incommsq: the input queue for the commshandler
-        outcommsq: the output queue for the commshandler
-        inserviceq: the input queue for the servicehandler
-        outserviceq: the output queue for the servicehandler
+        insocketq: the input queue for the sockethandler, read by the sockethandler
+        outsocketq: the output queue for the sockethandler, read by other handlers
+        incommsq: the input queue for the commshandler, read by the commshandler
+        outcommsq: the output queue for the commshandler, read by other handlers
+        inserviceq: the input queue for the servicehandler, read by the servicehandler
+        outserviceq: the output queue for the servicehandler, read by other handlers
 
         queuedict: a dictionary containing the queues that the RemoteClient dependencies will use to communicate between threads
         """
