@@ -241,6 +241,7 @@ class UdpPortService(AbstractRequest):
         pass
 
     def NetRequest(self, ip_address: str, port: int) -> Tuple[bool, Optional[str]]:
+        """Performs a UDP request against the given address and port; requires an address and port, returns a tuple with the status and result."""
         try:
             with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
                 sock.settimeout(3)
