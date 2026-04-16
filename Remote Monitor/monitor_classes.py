@@ -15,6 +15,17 @@ from queue import Queue
 class RemoteClient(AbstractClient):
     """The concrete remote client class which runs the general monitor, reads and writes settings, and does handler injection and thread creation"""
     def __init__(self):
+        """
+        Initializes the RemoteClient object with the necessary dependencies:
+
+        sockethandler: a SocketHandler object
+        commshandler: a CommsHandler object
+        servicehandler: a ServiceHandler object
+
+        servicedict: a dictionary containing the AbstractRequest objects (services) that can be used to run network requests
+
+        queuedict: a dictionary containing the queues that the RemoteClient dependencies will use to communicate between threads
+        """
         self.sockethandler: SocketHandler = None
         self.commshandler: CommsHandler = None
         self.servicehandler: ServiceHandler = None
