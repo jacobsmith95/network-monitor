@@ -149,7 +149,17 @@ class SocketHandler(AbstractHandler):
         sock.listen(5)
         sock.setsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE, 1)
         while True:
-
+            try:
+                server_message = sock.recv(1024)
+                if server_message:
+                    continue
+                match :
+                    case :
+                    case :
+                    case :
+            except :
+            except :
+            except :
         #return [sock, monitor_id]
 
 class CommsHandler(AbstractHandler):
