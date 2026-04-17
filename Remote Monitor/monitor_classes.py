@@ -148,7 +148,9 @@ class SocketHandler(AbstractHandler):
         sock.bind((ip_addr, int(port)))
         sock.listen(5)
         sock.setsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE, 1)
-        return [sock, monitor_id]
+        while True:
+
+        #return [sock, monitor_id]
 
 class CommsHandler(AbstractHandler):
     """Concrete class for handling communications from the server and coordinating communication between the manager threads"""
