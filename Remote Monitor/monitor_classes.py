@@ -153,13 +153,13 @@ class SocketHandler(AbstractHandler):
                 server_message = sock.recv(1024)
                 if server_message:
                     continue
-                match :
+                match server_message.decode():
                     case :
                     case :
                     case :
-            except :
-            except :
-            except :
+            except sock.timeout:
+            except ConnectionAbortedError:
+            except ConnectionResetError:
         #return [sock, monitor_id]
 
 class CommsHandler(AbstractHandler):
