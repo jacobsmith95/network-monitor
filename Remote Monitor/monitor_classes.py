@@ -144,6 +144,7 @@ class SocketHandler(AbstractHandler):
     def RunHandler(self, ip_addr: str, port: str, servicedict: dict) -> Tuple[object, str]:
         """Creates a TCP socket for a given address and port; requires an address and a port number, returns a tuple with the socket object and the combined address+port as monitor_id"""
         #monitor_id = ip_addr + '-' + port
+        incommsqueue: Queue = servicedict["in comms"]
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         sock.bind((ip_addr, int(port)))
         sock.listen(5)
@@ -158,10 +159,13 @@ class SocketHandler(AbstractHandler):
                     case :
                     case :
             except sock.timeout:
+                incommsqueue.put()
                 return
             except ConnectionAbortedError:
+                incommsqueue.put()
                 return
             except ConnectionResetError:
+                incommsqueue.put()
                 return
         #return [sock, monitor_id]
 
